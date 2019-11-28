@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/img"/>
+    <qresource prefix="/">
+        <file>img/206005-OZQ0RM-390.jpg</file>
+        <file>img/209832-P04MD6-798.png</file>
+        <file>img/Webp.net-resizeimage.jpg</file>
+        <file>img/75625256_464637190855656_7494988901006704640_n.jpg</file>
+        <file>img/78736893_594348361107546_204000363760582656_n.jpg</file>
+        <file>img/modele-voyage-elements-lignes-pointilles_23-2148046366.jpg</file>
+        <file>img/modele-voyage-elements-lignes-pointilles_23-2148046427.jpg</file>
+        <file>img/modele-voyage-elements-lignes-pointilles_23-2148057145.jpg</file>
+        <file>img/contexte-39-elements-voyage-differents-message_23-2147598696.jpg</file>
+    </qresource>
+</RCC>
