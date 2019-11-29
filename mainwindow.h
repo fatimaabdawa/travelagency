@@ -1,10 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include<prromtion.h>
-#include<evenemant.h>
+#include "reserverhotel.h"
+#include "reservervoyage.h"
 #include <QMainWindow>
-#include"login.h"
-#include"smtp.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,64 +17,28 @@ public:
     ~MainWindow();
 
 private slots:
+    void on_idhotel_combobox_currentIndexChanged(const QString &arg1);
 
-    void sendMail();
-      void mailSent(QString);
+    void on_Ajout_rhotel_clicked();
 
+    void on_numeropasseport_combobox_currentIndexChanged(const QString &arg1);
 
-    void on_pushButton_clicked();
+    void on_supprimer_rhotel_clicked();
 
-    void on_pushButton_3_clicked();
+    void on_reservervoyage_ajout_clicked();
 
-    void on_pushButton_4_clicked();
+    void on_codedestination_rv_ajout_currentIndexChanged(const QString &arg1);
 
-    void on_pushButton_6_clicked();
-    void refresh();
+    void on_modifier_rhotel_clicked();
 
+    void on_datereservation_ajout_userDateChanged(const QDate &date);
 
-
-    void on_pushButton_2_clicked();
-
-    void on_pushButton_5_clicked();
-
-    void on_comboBox_supprimer_activated(const QString &arg1);
-
-    void on_consulter_stat_clicked();
-
-    void on_pushbouton_print_clicked();
-
-    void on_comboBox_2_activated(const QString &arg1);
-
-    void on_comboBox_activated(const QString &arg1);
-
-    void on_supprimer_clicked();
-
-    void on_dateDebut_userDateChanged(const QDate &date);
-
-    void on_datefin_userDateChanged(const QDate &date);
-
-    void on_dated_userDateChanged(const QDate &date);
-
-    void on_datef_userDateChanged(const QDate &date);
-
-    void on_modifier_clicked_clicked();
-
-    void on_comboBox_4_activated(const QString &arg1);
-
-    void on_comboBox_3_activated(const QString &arg1);
-
-    void on_dateEdit_debut_userDateChanged(const QDate &date);
-
-    void on_dateEdit_fin_userDateChanged(const QDate &date);
-
-    void on_dateEdit_modifprodebut_userDateChanged(const QDate &date);
-
-    void on_dateEdit_modifprofin_userDateChanged(const QDate &date);
+    void on_idhotel_supprimer_currentIndexChanged(const QString &arg1);
 
 private:
     Ui::MainWindow *ui;
-prromtion tmpprromotion;
-evenemant tmpevenemant;
-
+    reservervoyage tmpreservoyage;
+    reserverhotel tmpajouth;
+    reserverhotel tmpreshotel;
 };
 #endif // MAINWINDOW_H
