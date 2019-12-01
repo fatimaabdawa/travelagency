@@ -10,5 +10,6 @@
         <file>darkx.qss</file>
         <file>pfold.qss</file>
         <file>style.qss</file>
+        <file>../background_travel.jpg</file>
     </qresource>
 </RCC>

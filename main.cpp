@@ -6,6 +6,8 @@
 #include <QMessageBox>
 #include <iostream>
 #include <QFile>
+#include "login.h"
+#include "notification.h"
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -21,8 +23,12 @@ int main(int argc, char *argv[])
    if(test){
 
    MainWindow w;
-       w.show();
+       login l;
+       l.show();
+       notification notif;
+       notif.notification_Ouverture("");
        //QMessageBox::information(nullptr,QObject::tr("Bienvenue !"),"Vous etes connecte a la base !");
+       QObject::connect(&l,&login::adminSignal,&w,&MainWindow::show);
        return a.exec();
    }
    else //QMessageBox::information(nullptr,QObject::tr("ERROR !"),"Probleme de connexion a la base !");

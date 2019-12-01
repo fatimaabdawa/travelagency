@@ -9,17 +9,17 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #ifndef SMTP_H
 #define SMTP_H
-
-
 #include <QtNetwork/QAbstractSocket>
-#include <QtNetwork/QSslSocket>
+#include <QAbstractSocket>
+#include <QtNetwork>
+#include <QSslSocket>
 #include <QString>
 #include <QTextStream>
 #include <QDebug>
 #include <QtWidgets/QMessageBox>
+#include <QMessageBox>
+#include <QtWidgets>
 #include <QByteArray>
-#include <QtNetwork>
-#include <QSslSocket>
 
 
 
@@ -30,11 +30,10 @@ class Smtp : public QObject
 
 public:
     Smtp( const QString &user, const QString &pass,
-          const QString &host, quint16 port = 587
-            , int timeout = 30000 );
+          const QString &host, int port = 465, int timeout = 30000 );
     ~Smtp();
 
-    void sendMail( const QString &from, const QString &to,
+    bool sendMail( const QString &from, const QString &to,
                    const QString &subject, const QString &body );
 
 signals:
@@ -58,7 +57,7 @@ private:
     QString user;
     QString pass;
     QString host;
-    quint16 port;
+    int port;
     enum states{Tls, HandShake ,Auth,User,Pass,Rcpt,Mail,Data,Init,Body,Quit,Close};
     int state;
 

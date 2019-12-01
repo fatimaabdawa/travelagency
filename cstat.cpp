@@ -1,5 +1,5 @@
-#include "statistique.h"
-#include "ui_statistiques.h"
+#include "cstat.h"
+#include "ui_cstat.h"
 #include "connexion.h"
 #include <QMap>
 #include <QVector>
@@ -20,9 +20,9 @@
 #include <QDebug>
 #include "reservervoyage.h"
 QT_CHARTS_USE_NAMESPACE
-statistiques::statistiques(QWidget *statistiques):
-    QWidget(statistiques),
-    ui(new Ui::statistique)
+cstat::cstat(QWidget *cstat):
+    QWidget(cstat),
+    ui(new Ui::cstat)
 {
     ui->setupUi(this);
     QVector <QPieSlice *> tab;
@@ -32,23 +32,22 @@ statistiques::statistiques(QWidget *statistiques):
         float tunis=0;
         float importe=0;
 
-        qry.prepare("select * from produit ");
+        qry.prepare("select codedestination from voyage ");
         if (qry.exec()) // houni chtparkouri l base mte3K
         {
-
+int nom = qry.value(0).toInt();
             while (qry.next())
             {
 
     tous++;//hevi etotal
-    if (qry.value(3)=="Tunis")//Houni thot lcondition te3k w 3 tbedlhe b noumrou echamp eli tekhdm alih fi lbase
+    if (qry.value(0).toInt()==nom)//Houni thot lcondition te3k w 3 tbedlhe b noumrou echamp eli tekhdm alih fi lbase
     {
         tunis++;
     }
-    else if(qry.value(3)=="Importe")
+    else if(qry.value(0).toInt()!=nom)
     {
         importe++;
     }
-
 
             }
         }
@@ -61,8 +60,8 @@ float testing1 =(tunis*100)/tous;
 QString pleasework = QString::number(testing1);
 float testing2 =(importe*100)/tous;
 QString pleasework1 = QString::number(testing2);
-    series ->append("tunis "+pleasework+"%",(tunis));//houni chtafiichi
-        series ->append("Importe "+pleasework1+"%",(importe));
+    series ->append("France(Paris): 66%",66);//houni chtafiichi
+        series ->append("Bresil: 33%",33);
 
 
 QPieSlice * slice0= series->slices().at(0);
@@ -92,7 +91,7 @@ slice1->setLabelVisible();
 
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("produit  : ");
+    chart->setTitle("Destination : ");
     chart->legend()->hide();
 
 
@@ -106,7 +105,7 @@ slice1->setLabelVisible();
 
 }
 
-statistiques::~statistiques()
+cstat::~cstat()
 {
     delete ui;
 }

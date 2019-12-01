@@ -1,4 +1,4 @@
- QT       += core gui sql
+ QT       += core gui sql network printsupport multimedia charts
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,18 +17,30 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     connexion.cpp \
+    cstat.cpp \
+    login.cpp \
     main.cpp \
     mainwindow.cpp \
+    notification.cpp \
+    qcustomplot.cpp \
     reserverhotel.cpp \
-    reservervoyage.cpp
+    reservervoyage.cpp \
+    smtp.cpp
 
 HEADERS += \
     connexion.h \
+    cstat.h \
+    login.h \
     mainwindow.h \
+    notification.h \
+    qcustomplot.h \
     reserverhotel.h \
-    reservervoyage.h
+    reservervoyage.h \
+    smtp.h
 
 FORMS += \
+    cstat.ui \
+    login.ui \
     mainwindow.ui
 
 # Default rules for deployment.
@@ -38,3 +50,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     rsc.qrc
+
+DISTFILES += \
+    libeay32.dll \
+    ssleay32.dll

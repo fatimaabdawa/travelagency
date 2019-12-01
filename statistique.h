@@ -1,26 +1,24 @@
-#ifndef STATISTIQUE_H
-#define STATISTIQUE_H
+#ifndef STATISTIQUES_H
+#define STATISTIQUES_H
 
-#include <QDialog>
-#include"connexion.h"
-#include "qcustomplot.h"
 #include <QWidget>
-
+#include <QMap>
+#include <QVector>
 namespace Ui {
-class statistique;
+class statistiques;
 }
 
-class statistique : public QDialog
+class statistiques : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit statistique(QWidget *parent = nullptr);
-    ~statistique();
-    void makePolt();
+    explicit statistiques(QWidget *parent = nullptr);
+    ~statistiques();
 
 private:
-    Ui::statistique *ui;
+    Ui::statistiques *ui;
 };
 
-#endif // STATISTIQUE_H
+
+#endif // STATISTIQUES_H
