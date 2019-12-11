@@ -91,12 +91,13 @@ QSqlQueryModel * destination:: recherche(QString valeur,int etat)
     return model;
 }
 
-void destination:: chercher()
+void destination:: chercher(int rd)
 {    QSqlQuery query1;
-     query1.prepare("SELECT nom;description,promo FROM destination WHERE code=:code");
-      query1.bindValue(":code", code);
-       query1.exec();
-        while(query1.next())
+     QString r = QString::number(rd);
+     query1.prepare("SELECT * FROM destination WHERE code='"+r+"'");
+     query1.bindValue(":code",r);
+     query1.exec();
+     while(query1.next())
         {
             nom = query1.value(0).toString();
             description = query1.value(1).toString();

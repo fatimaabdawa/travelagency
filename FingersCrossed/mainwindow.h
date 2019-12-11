@@ -4,8 +4,8 @@
 #include "hotel.h"
 #include <QMainWindow>
 #include "notification.h"
-
-
+#include <QMediaPlayer>
+#include <QtMultimedia>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,12 +30,11 @@ private slots:
 
     void on_supprimer_hotel_clicked();
 
-
-    void on_comboBox_currentIndexChanged(const QString &arg1);
+    void on_comboBox_currentIndexChanged();
 
     void on_Modifier_clicked();
 
-    void on_comboBox_2_currentIndexChanged(const QString &arg1);
+    void on_comboBox_2_currentIndexChanged();
 
     void on_ModifierHotel_clicked();
 
@@ -47,15 +46,17 @@ private slots:
 
     void on_checkBox_stateChanged(int arg1);
 
-    void on_mail_button_clicked();
-
-
-
-    void on_TabDestinations_tabBarClicked(int index);
-
     void on_pushButton_clicked();
 
-    void on_Code_destination_ajouthotel_currentIndexChanged(const QString &arg1);
+    void on_Code_destination_ajouthotel_currentIndexChanged();
+
+    void on_pushButton_2_clicked();
+
+    void on_horizontalSlider_sliderMoved(int position);
+
+    void on_music_button_clicked();
+
+    void on_mute_button_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -64,5 +65,6 @@ private:
     QString valeur="";
     int etat=0;
     notification ok;
+    QMediaPlayer *player = new QMediaPlayer();
 };
 #endif // MAINWINDOW_H

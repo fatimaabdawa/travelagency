@@ -18,11 +18,12 @@ QSqlQueryModel * hotel::afficherH()
 {
     QSqlQueryModel * model = new QSqlQueryModel();
     model->setQuery("select * from hotel");
-    model->setHeaderData(0, Qt::Horizontal,QObject::tr("idhotel"));
-    model->setHeaderData(1, Qt::Horizontal,QObject::tr("nom"));
-    model->setHeaderData(2, Qt::Horizontal,QObject::tr("adresse"));
-    model->setHeaderData(3, Qt::Horizontal,QObject::tr("etoiles"));
+    model->setHeaderData(3, Qt::Horizontal,QObject::tr("idhotel"));
+    model->setHeaderData(0, Qt::Horizontal,QObject::tr("nom"));
+    model->setHeaderData(1, Qt::Horizontal,QObject::tr("adresse"));
+    model->setHeaderData(2, Qt::Horizontal,QObject::tr("etoiles"));
     model->setHeaderData(4, Qt::Horizontal,QObject::tr("coutparnuit"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("CodeDestination"));
     return model ;
 }
 QSqlQueryModel * hotel::ModelidhotelHotel()
@@ -39,14 +40,14 @@ bool hotel::ajouterH()
 {
     QSqlQuery query;
     QString res=QString::number(idhotel);
-    query.prepare("INSERT INTO hotel(idhotel, nom , adresse , etoiles, coutparnuit, codedestination ) VALUES ( HABIB.INCREMENT_IDHOTEL.NEXTVAL,:nom , :adresse, :etoiles,:coutparnuit,:codedestination)");
+    query.prepare("INSERT INTO hotel(nom,adresse, etoiles,idhotel ,coutparnuit, codedestination ) VALUES (:nom , :adresse, :etoiles ,HABIB.INCREMENT_IDHOTEL.NEXTVAL,:coutparnuit,:codedestination)");
     query.bindValue(":nom",nom);
-    query.bindValue(":codedestination", codedestination);
     query.bindValue(":adresse", adresse);
     query.bindValue(":etoiles", etoiles);
     query.bindValue(":coutparnuit", coutparnuit);
-    return query.exec();
+    query.bindValue(":codedestination", codedestination);
 
+    return query.exec();
 }
 
 bool hotel::supprimer()
@@ -62,12 +63,12 @@ bool hotel::modifier()
 {
     QSqlQuery query;
     QString yep=QString::number(idhotel);
-    query.prepare("update hotel set adresse=:adresse,nom=:nom,etoiles=:etoiles,coutparnuit=:coutparnuit,codedestination=:codedestination  where idhotel='"+yep+"'");
+    query.prepare("update hotel set adresse=:adresse,nom=:nom,etoiles=:etoiles,coutparnuit=:coutparnuit where idhotel='"+yep+"'");
     query.bindValue(":nom",nom);
+    query.bindValue(":idhotel",idhotel);
     query.bindValue(":adresse",adresse);
     query.bindValue(":etoiles",etoiles);
     query.bindValue(":coutparnuit",coutparnuit);
-    query.bindValue(":codedestination",codedestination);
     return  query.exec();
 }
 
@@ -77,17 +78,18 @@ QSqlQueryModel * hotel:: recherche(QString valeur,int etat)
 
     QSqlQuery query;
     if(etat==1)
-    { query.prepare("SELECT * FROM hotel WHERE NOM LIKE :valeur order by NOM");}
+    { query.prepare("SELECT * FROM hotel WHERE NOM LIKE :valeur OR adresse like :valeur order by NOM");}
     else
-    { query.prepare("SELECT * FROM hotel WHERE NOM LIKE :valeur order by NOM desc");}
+    { query.prepare("SELECT * FROM hotel WHERE NOM LIKE :valeur  adresse like :valeur  order by NOM desc");}
     valeur="%"+valeur+"%";
     query.bindValue(":valeur",valeur);
     query.exec();
     model->setQuery(query);
+
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("Nom"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("adresse"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("id hotel"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("etoiles"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("id hotel"));
     model->setHeaderData(4, Qt::Horizontal, QObject::tr("coutparnuit"));
     model->setHeaderData(5, Qt::Horizontal, QObject::tr("CodeDestination"));
     return model;

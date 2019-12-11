@@ -1,44 +1,45 @@
-
-#include "statistique.h"
-#include "ui_statistique.h"
+#include "statclient.h"
+#include "ui_statclient.h"
+#include "QSqlQuery"
+#include "client.h"
 #include "qcustomplot.h"
 #include"QSqlRecord"
-#include"QSqlQuery"
 
-statistique::statistique(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::statistique)
+statclient::statclient(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::statclient)
 {
     ui->setupUi(this);
-    this->setWindowTitle("Stats");
+    this->setWindowTitle("Statistiques");
     makePolt();
 }
 
-statistique::~statistique()
+statclient::~statclient()
 {
     delete ui;
 }
 
-void statistique::makePolt()
-{ 
+void statclient::makePolt()
+{
     QLinearGradient gradient(0, 0, 0, 400);
     gradient.setColorAt(0, QColor(90, 90, 90));
     gradient.setColorAt(0.38, QColor(105, 105, 105));
     gradient.setColorAt(1, QColor(70, 70, 70));
-    ui->customPlot->setBackground(QBrush(gradient)); 
+    ui->customPlot->setBackground(QBrush(gradient));
     QCPBars *regen = new QCPBars(ui->customPlot->xAxis, ui->customPlot->yAxis);
     regen->setAntialiased(false);
     regen->setStackingGap(1);
-    regen->setName("Moyenne Hotels Par Destination");
-    regen->setPen(QPen(QColor(0, 168, 140).lighter(130)));
-    regen->setBrush(QColor(0, 168, 140));
+    regen->setName("Moyenne des ages");
+
+    regen->setPen(QPen(QColor(250, 170, 20).lighter(150)));
+    regen->setBrush(QColor(250,170,20));
 
 
     // prepare x axis with country labels:
     QVector<double> ticks;
     QVector<QString> labels;
     ticks << 1 << 2 ;
-    labels << "hajaokhra" << "Pays okrinokhrin" ;
+    labels << "Tunisie" << "Autres Pays" ;
     QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
     textTicker->addTicks(ticks, labels);
     ui->customPlot->xAxis->setTicker(textTicker);
@@ -68,20 +69,16 @@ void statistique::makePolt()
     // Add data:
     QVector<double> regenData;
 
-    QSqlQuery query1("select code from destination");
-    while (query1.next())  {
-        int  nbr_faute=0;
+    client c;
+    QSqlQuery query1=c.fctq();
+    while (query1.next()) {
+        int  nbr_faute;
                            int  nbr_fautee = query1.value(0).toInt();
-                           QSqlQuery query2;
-                           query2.prepare("select count from hotel where CODEDESTINATION =: nbr_fautee");
-                           query2.bindValue(":nbr_fautee",nbr_fautee);
-                           query2.exec();
-                           while (query2.next())
-                           {
+                           QSqlQuery query2=c.fctq2();
+                           while (query2.next()) {
                                                   nbr_faute = query2.value(0).toInt();
                                                   break;
-
-                           }
+                                                    }
                            regenData<< nbr_fautee<< nbr_faute;
                            break;
                              }

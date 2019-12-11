@@ -1,5 +1,5 @@
-#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "mainwindow.h"
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
@@ -14,22 +14,43 @@
 #include "smtp.h"
 #include "qcustomplot.h"
 #include "statistique.h"
+#include <QTime>
+#include <QMainWindow>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ok.notification_Ouverture("GESTION HOTELS/DESTINATIONS");
+    //ok.notification_Ouverture("GESTION HOTELS/DESTINATIONS");
     ui->tableView->setModel(tmpdestination.afficher());
     ui->tableView2->setModel(tmphotel.afficherH());
     ui->comboBox->setModel(tmpdestination.ModelCodeDestinations());
     ui->comboBox_2->setModel(tmphotel.ModelidhotelHotel());
-    //ui->Code_destination_ajouthotel->setModel(tmpdestination.ModelCodeDestinations());
+    ui->idhotel_asupprimer->setModel(tmphotel.ModelidhotelHotel());
+    ui->Code_destination_ajouthotel->setModel(tmpdestination.ModelCodeDestinations());
+    ui->code_asupprimer->setModel(tmpdestination.ModelCodeDestinations());
     QPixmap back1("C:/Users/Haboub/Pictures/Wallpapers/witcherHorizon.jpg");
     QPixmap back2("C:/Users/Haboub/Pictures/Wallpapers/trave1background.jpg");
     QPixmap back3("C:/Users/Haboub/Pictures/Wallpapers/hotel1background.jpg");
     QPixmap back4("C:/Users/Haboub/Pictures/Wallpapers/hotel2background.jpg");
+    player->setMedia(QUrl("C:/Users/Haboub/Desktop/Musi9/Daryl Hall & John Oates - Maneater (Official Music Video).mp3"));
+
+    ui->promo_aajouter->setValidator(new QRegExpValidator(QRegExp("[0-1]"),this));
+    ui->nom_aajout->setValidator(new QRegExpValidator(QRegExp("[a-z-A-Z-0-9]+"),this));
+    //ui->description_aajouter->setValidator(new QRegExpValidator(QRegExp("[a-z-A-Z-0-9]+"),this));
+    ui->promo_amodifier->setValidator(new QRegExpValidator(QRegExp("[0-1]"),this));
+    ui->nom_amodifier->setValidator(new QRegExpValidator(QRegExp("[a-z-A-Z-0-9]+"),this));
+    //ui->description_amodifier->setValidator(new QRegExpValidator(QRegExp("[a-z-A-Z-0-9]+"),this));
+
+    ui->cout_ajout_hotel->setValidator(new QRegExpValidator(QRegExp("[0-9]*"),this));
+    ui->couthotel_amodifier->setValidator(new QRegExpValidator(QRegExp("[0-9]*"),this));
+    ui->etoiles_ajout_hotel->setValidator(new QRegExpValidator(QRegExp("[0-9]"),this));
+    ui->etoileshotel_amodifier->setValidator(new QRegExpValidator(QRegExp("[0-9]"),this));
+
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -43,27 +64,30 @@ void MainWindow::on_ajouter_destination_clicked()
     tmpdestination.setNom(ui->nom_aajout->text());
     tmpdestination.setDescription(ui->description_aajouter->text());
     QString nom=ui->nom_aajout->text();
+    if(ui->nom_aajout->hasAcceptableInput() && ui->promo_aajouter->hasAcceptableInput()){
     bool test=tmpdestination.ajouter();
     if(test)
     {
         ok.notification_ajout_destination(nom);
         ui->tableView->setModel(tmpdestination.afficher());
         ui->comboBox->setModel(tmpdestination.ModelCodeDestinations());
+        ui->code_asupprimer->setModel(tmpdestination.ModelCodeDestinations());
         QMessageBox::information(nullptr,QObject::tr("Ajout Destination"),"Destination Ajoutée");
+    }
+
     }
 
 }
 
 void MainWindow::on_SupprimerDestination_clicked()
 {
-    int code= ui->code_asupprimer->text().toInt();
-
+    int code= ui->code_asupprimer->currentText().toInt();
     bool test=tmpdestination.supprimer(code);
     if(test)
     {
         ui->tableView->setModel(tmpdestination.afficher());
         ui->comboBox->setModel(tmpdestination.ModelCodeDestinations());
-        ui->code_asupprimer->setText("");
+        ui->code_asupprimer->setModel(tmpdestination.ModelCodeDestinations());
     }
     else
     {
@@ -73,7 +97,6 @@ void MainWindow::on_SupprimerDestination_clicked()
 
 void MainWindow::on_ajouter_hotel_clicked()
 {
-    tmphotel.setiIdhotel(ui->id_ajout_hotel->text().toInt());
     tmphotel.setEtoiles(ui->etoiles_ajout_hotel->text().toInt());
     tmphotel.setNom(ui->nom_ajouter_hotel->text());
     tmphotel.setAdresse(ui->adresse_ajout_hotel->text());
@@ -85,6 +108,7 @@ void MainWindow::on_ajouter_hotel_clicked()
         ok.notification_ajout_hotel(tmphotel.getNom());
         ui->comboBox_2->setModel(tmphotel.ModelidhotelHotel());
         ui->tableView2->setModel(tmphotel.afficherH());
+        ui->idhotel_asupprimer->setModel(tmphotel.ModelidhotelHotel());
         QMessageBox::information(nullptr,QObject::tr("Ajout Hotel"),"Well done sire!");
     }else
         QMessageBox::information(nullptr,QObject::tr("Ajout Hotel"),"ERROR MY LIEGE");
@@ -93,11 +117,12 @@ void MainWindow::on_ajouter_hotel_clicked()
 
 void MainWindow::on_supprimer_hotel_clicked()
 {
-    tmphotel.setiIdhotel(ui->idhotel_asupprimer->text().toInt());
+    tmphotel.setiIdhotel(ui->idhotel_asupprimer->currentText().toInt());
     bool test=tmphotel.supprimer();
     if(test)
     {
         ui->tableView2->setModel(tmphotel.afficherH());
+        ui->idhotel_asupprimer->setModel(tmphotel.ModelidhotelHotel());
         QMessageBox::information(nullptr,QObject::tr("Suppression Hotel"),"Well done sire!");
     }
     else
@@ -105,13 +130,16 @@ void MainWindow::on_supprimer_hotel_clicked()
 }
 
 
-void MainWindow::on_comboBox_currentIndexChanged(const QString &arg1)
+void MainWindow::on_comboBox_currentIndexChanged()
 {
-        tmpdestination.setCode(ui->comboBox->currentText().toInt());
-        tmpdestination.chercher();
-        ui->nom_amodifier->setText(tmpdestination.getNom());
-        ui->description_amodifier->setText(tmpdestination.getDescription());
-        ui->promo_amodifier->setText(QString::number(tmpdestination.getPromo()));
+    destination d;
+    d.setCode(ui->comboBox->currentText().toInt());
+    tmpdestination.setCode(ui->comboBox->currentText().toInt());
+    d.chercher(ui->comboBox->currentText().toInt());
+    tmpdestination.chercher(d.getCode());
+    ui->nom_amodifier->setText(tmpdestination.getNom());
+    ui->description_amodifier->setText(tmpdestination.getDescription());
+    ui->promo_amodifier->setText(QString::number(tmpdestination.getPromo()));
 }
 
 void MainWindow::on_Modifier_clicked()
@@ -121,6 +149,7 @@ void MainWindow::on_Modifier_clicked()
     QString description = ui->description_amodifier->text();
     QString nom = ui->nom_amodifier->text();
     destination d;
+    if(ui->promo_amodifier->hasAcceptableInput() && ui->nom_amodifier->hasAcceptableInput()){
     bool y=d.modifier(description,nom,code,promo);
     if(y)
     {
@@ -131,23 +160,20 @@ void MainWindow::on_Modifier_clicked()
     {
         QMessageBox::information(nullptr,QObject::tr("Modification Destination"),"Error my liege !");
     }
+
+      }
 }
 
-void MainWindow::on_comboBox_2_currentIndexChanged(const QString &arg1)
+void MainWindow::on_comboBox_2_currentIndexChanged()
 {
-    QString idhotel = QString::number(arg1.toInt());
-    QSqlQuery query;
     tmphotel.setiIdhotel(ui->comboBox_2->currentText().toInt());
     tmphotel.chercher();
-    while(query.next())
-    {
-        ui->nomhotel_amodifier->setText(tmphotel.getNom());
-        ui->adressehotel_amodifier->setText(tmphotel.getAdresse());
-        ui->etoileshotel_amodifier->setText(QString::number(tmphotel.getEtoiles()));
-        ui->couthotel_amodifier->setText(QString::number(tmphotel.getCout_par_nuit()));
-    }
-}
+    ui->nomhotel_amodifier->setText(tmphotel.getNom());
+    ui->adressehotel_amodifier->setText(tmphotel.getAdresse());
+    ui->etoileshotel_amodifier->setText(QString::number(tmphotel.getEtoiles()));
+    ui->couthotel_amodifier->setText(QString::number(tmphotel.getCout_par_nuit()));
 
+}
 
 void MainWindow::on_ModifierHotel_clicked()
 {
@@ -196,46 +222,44 @@ void MainWindow::on_checkBox_2_stateChanged(int arg1)
 
 }
 
-void MainWindow::on_mail_button_clicked()
-{
-    Smtp* smtp = new Smtp("nooblolsaibot1@gmail.com", "haboubax", "smtp.gmail.com", 465);
-    if(smtp->sendMail("nooblolsaibot1@gmail.com","oussema.benjabli@esprit.tn" , "YAAAY","MAILING T5DM"))
-        QMessageBox::information(nullptr,QObject::tr("mail"),"séntmail wéll doné siré");
-}
-
-
-
-
-void MainWindow::on_TabDestinations_tabBarClicked(int index)
-{
-    // generate some data:
-    QVector<double> x(101), y(101); // initialize with entries 0..100
-    for (int i=0; i<101; ++i)
-    {
-        x[i] = i/50.0 - 1; // x goes from -1 to 1
-        y[i] = x[i]*x[i]; // let's plot a quadratic function
-    }
-    // create graph and assign data to it:
-    ui->customPlot->addGraph();
-    ui->customPlot->graph(0)->setData(x,y,0);
-    // give the axes some labels:
-    ui->customPlot->xAxis->setLabel("x");
-    ui->customPlot->yAxis->setLabel("y");
-    // set axes ranges, so we see all data:
-    ui->customPlot->xAxis->setRange(-1, 1);
-    ui->customPlot->yAxis->setRange(0, 1);
-    ui->customPlot->replot();
-}
 void MainWindow::on_pushButton_clicked()
 {
-    statistique * e = new statistique();
-    setWindowModality(Qt::WindowModal);
-    e->show();
+    QString receiver;
+    QString objet;
+    QString contenu;
+    receiver = ui->receiver_line->text();
+    objet = ui->about_line->text();
+    contenu = ui->text_line->text();
+    Smtp* smtp = new Smtp("nooblolsaibot1@gmail.com", "haboubax", "smtp.gmail.com", 465);
+    if(smtp->sendMail("nooblolsaibot1@gmail.com",receiver,objet,contenu))
+        QMessageBox::information(nullptr,QObject::tr("mail"),"Votre mail a été envoyé.");
+}
+void MainWindow::on_Code_destination_ajouthotel_currentIndexChanged()
+{
+    destination d;
+    d.setCode(ui->Code_destination_ajouthotel->currentText().toInt());
+    tmpdestination.setCode(ui->Code_destination_ajouthotel->currentText().toInt());
+    tmpdestination.chercher(d.getCode());
+
 }
 
-void MainWindow::on_Code_destination_ajouthotel_currentIndexChanged(const QString &arg1)
+void MainWindow::on_pushButton_2_clicked()
 {
-    tmpdestination.setCode(ui->Code_destination_ajouthotel->currentText().toInt());
-    tmpdestination.chercher();
-    ui->affichage_nomDestHotel->setText(QString::number(tmpdestination.getCode()));
+    statistique *s = new statistique();
+    s->show();
+}
+
+void MainWindow::on_horizontalSlider_sliderMoved(int position)
+{
+    player->setVolume(position);
+}
+
+void MainWindow::on_music_button_clicked()
+{
+    player->play();
+}
+
+void MainWindow::on_mute_button_clicked()
+{
+    player->stop();
 }

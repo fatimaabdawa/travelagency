@@ -47,10 +47,6 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
     <property name="text">
      <string>Se connecter</string>
     </property>
-    <property name="icon">
-     <iconset resource="rsc.qrc">
-      <normaloff>:/img/backrdblack.jpg</normaloff>:/img/backrdblack.jpg</iconset>
-    </property>
     <property name="iconSize">
      <size>
       <width>500</width>
@@ -137,8 +133,8 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>50</y>
+      <x>10</x>
+      <y>30</y>
       <width>80</width>
       <height>21</height>
      </rect>
@@ -150,8 +146,8 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>50</y>
+      <x>100</x>
+      <y>30</y>
       <width>80</width>
       <height>21</height>
      </rect>
@@ -160,12 +156,26 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
      <string>OFF</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>10</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Ventilateur :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
    <zorder>layoutWidget</zorder>
    <zorder>connecter</zorder>
    <zorder>Wrongpassword</zorder>
    <zorder>Wrongpassword_2</zorder>
    <zorder>pushButton</zorder>
    <zorder>pushButton_2</zorder>
+   <zorder>label</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -179,8 +189,6 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources>
-  <include location="rsc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
