@@ -25,6 +25,8 @@ bool ajouter();
 bool modifier();
 QSqlQueryModel * stats();
 QSqlQueryModel* afficher_list();
+QSqlQueryModel * afficher_tri();
+QSqlQueryModel * chercher_evenement(QString nom);
 private:
 QString id,dateD,dateF,nom,lieu;
 

@@ -1,112 +1,111 @@
 #include "statistique.h"
-#include "ui_statistiques.h"
-#include "connexion.h"
-#include <QMap>
-#include <QVector>
-#include <QString>
-#include <QtWidgets/QMainWindow>
-#include <QtCharts/QChartView>
-#include <QtCharts/QBarSeries>
-#include <QtCharts/QBarSet>
-#include <QtCharts/QLegend>
-#include <QtCharts/QBarCategoryAxis>
-#include <QtCharts/QHorizontalStackedBarSeries>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QCategoryAxis>
-#include <QtCharts/QPieSeries>
-#include <QtCharts/QPieSlice>
-#include <QtWidgets/QGridLayout>
-#include <QSqlQuery>
-#include <QDebug>
-#include "reservervoyage.h"
-QT_CHARTS_USE_NAMESPACE
-statistiques::statistiques(QWidget *statistiques):
-    QWidget(statistiques),
+#include "ui_statistique.h"
+#include"QSqlRecord"
+#include"QSqlQuery"
+
+statistique::statistique(QWidget *parent) :
+    QDialog(parent),
     ui(new Ui::statistique)
 {
     ui->setupUi(this);
-    QVector <QPieSlice *> tab;
-        QPieSeries *series = new QPieSeries();
-        QSqlQuery qry;
-        float tous=0; // hevouma les variables eli chtekhdm alihom
-        float tunis=0;
-        float importe=0;
-
-        qry.prepare("select * from produit ");
-        if (qry.exec()) // houni chtparkouri l base mte3K
-        {
-
-            while (qry.next())
-            {
-
-    tous++;//hevi etotal
-    if (qry.value(3)=="Tunis")//Houni thot lcondition te3k w 3 tbedlhe b noumrou echamp eli tekhdm alih fi lbase
-    {
-        tunis++;
-    }
-    else if(qry.value(3)=="Importe")
-    {
-        importe++;
-    }
-
-
-            }
-        }
-        qDebug () << "tous" << tous;
-        qDebug () << "tunis " << tunis;
-            qDebug () << "importe " << importe;
-
-
-float testing1 =(tunis*100)/tous;
-QString pleasework = QString::number(testing1);
-float testing2 =(importe*100)/tous;
-QString pleasework1 = QString::number(testing2);
-    series ->append("tunis "+pleasework+"%",(tunis));//houni chtafiichi
-        series ->append("Importe "+pleasework1+"%",(importe));
-
-
-QPieSlice * slice0= series->slices().at(0);
-slice0->setLabelVisible();
-QPieSlice * slice1= series->slices().at(1);
-slice1->setLabelVisible();
-
-    if (tunis>importe)
-    {
-
-       slice0->setExploded();
-        slice0->setPen(QPen(Qt::darkGreen,2));
-       slice0->setBrush(Qt::red);
-
-    }
-    else
-    {
-
- slice1->setExploded();
-  slice1->setPen(QPen(Qt::darkGreen,2));
- slice1->setBrush(Qt::red);
-    }
-
-
-
-
-
-    QChart *chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("produit  : ");
-    chart->legend()->hide();
-
-
-
-                QChartView *chartview = new QChartView (chart);
-        chartview->setRenderHint(QPainter::Antialiasing);
-        QGridLayout *mainLayout = new QGridLayout;
-            mainLayout->addWidget(chartview, 1, 1);
-            setLayout(mainLayout);
-
-
+    this->setWindowTitle("statistiques");
+    makePolt();
 }
 
-statistiques::~statistiques()
+statistique::~statistique()
 {
     delete ui;
+}
+
+void statistique::makePolt()
+{
+    //connection c;
+     //c.creatconnection();
+
+
+
+       ///////////////////////////////////////////////////////////////////////
+       // set dark background gradient:
+          QLinearGradient gradient(0, 0, 0, 400);
+          gradient.setColorAt(0, QColor(90, 90, 90));
+          gradient.setColorAt(0.38, QColor(105, 105, 105));
+          gradient.setColorAt(1, QColor(70, 70, 70));
+          ui->customPlot->setBackground(QBrush(gradient));
+
+
+          // create empty bar chart objects:
+          QCPBars *amande = new QCPBars(ui->customPlot->xAxis, ui->customPlot->yAxis);
+          amande->setAntialiased(false);
+          amande->setStackingGap(1);
+           //set names and colors:
+          amande->setName("Repartition des evenements selon lieu");
+          amande->setPen(QPen(QColor(0, 168, 140).lighter(130)));
+          amande->setBrush(QColor(0, 168, 140));
+          // stack bars on top of each other:
+
+
+          // prepare x axis with country labels:
+          QVector<double> ticks;
+          QVector<QString> labels;
+
+          QSqlQuery q;
+          int i=0;
+          q.exec("select lieu from evenement");
+          while (q.next()) {
+              QString adresse= q.value(0).toString();
+              i++;
+              ticks<<i;
+              labels <<adresse;
+          }
+          QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+          textTicker->addTicks(ticks, labels);
+          ui->customPlot->xAxis->setTicker(textTicker);
+          ui->customPlot->xAxis->setTickLabelRotation(60);
+          ui->customPlot->xAxis->setSubTicks(false);
+          ui->customPlot->xAxis->setTickLength(0, 4);
+          ui->customPlot->xAxis->setRange(0, 8);
+          ui->customPlot->xAxis->setBasePen(QPen(Qt::white));
+          ui->customPlot->xAxis->setTickPen(QPen(Qt::white));
+          ui->customPlot->xAxis->grid()->setVisible(true);
+          ui->customPlot->xAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+          ui->customPlot->xAxis->setTickLabelColor(Qt::white);
+          ui->customPlot->xAxis->setLabelColor(Qt::white);
+
+          // prepare y axis:
+          ui->customPlot->yAxis->setRange(0,10);
+          ui->customPlot->yAxis->setPadding(5); // a bit more space to the left border
+          ui->customPlot->yAxis->setLabel("Statistiques");
+          ui->customPlot->yAxis->setBasePen(QPen(Qt::white));
+          ui->customPlot->yAxis->setTickPen(QPen(Qt::white));
+          ui->customPlot->yAxis->setSubTickPen(QPen(Qt::white));
+          ui->customPlot->yAxis->grid()->setSubGridVisible(true);
+          ui->customPlot->yAxis->setTickLabelColor(Qt::white);
+          ui->customPlot->yAxis->setLabelColor(Qt::white);
+          ui->customPlot->yAxis->grid()->setPen(QPen(QColor(130, 130, 130), 0, Qt::SolidLine));
+          ui->customPlot->yAxis->grid()->setSubGridPen(QPen(QColor(130, 130, 130), 0, Qt::DotLine));
+
+          // Add data:
+
+          QVector<double> PlaceData;
+          QSqlQuery q1("select nom from evenement ");
+          while (q1.next()) {
+                        int  nbr_fautee = q1.value(0).toInt();
+                        PlaceData<< nbr_fautee;
+                          }
+          amande->setData(ticks, PlaceData);
+          // setup legend:
+          ui->customPlot->legend->setVisible(true);
+          ui->customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignHCenter);
+          ui->customPlot->legend->setBrush(QColor(255, 255, 255, 100));
+          ui->customPlot->legend->setBorderPen(Qt::NoPen);
+          QFont legendFont = font();
+          legendFont.setPointSize(10);
+          ui->customPlot->legend->setFont(legendFont);
+          ui->customPlot->setInteractions(QCP::iRangeDrag | QCP::iRangeZoom);
+
+
+
+
+
+
 }

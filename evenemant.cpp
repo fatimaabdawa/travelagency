@@ -148,4 +148,31 @@ bool evenemant::supprimer(QString id)
 
 }
 
+QSqlQueryModel * evenemant::chercher_evenement(QString nom)
+{
+    QSqlQueryModel * model= new QSqlQueryModel();
+model->setQuery("select * from evenement order by id");
+model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+model->setHeaderData(1, Qt::Horizontal, QObject::tr("DATEDEBUT "));
+model->setHeaderData(2, Qt::Horizontal, QObject::tr("DATEFIN"));
+model->setHeaderData(3, Qt::Horizontal, QObject::tr("NOM"));
+model->setHeaderData(4, Qt::Horizontal, QObject::tr("LIEU"));
 
+    return model;
+}
+
+QSqlQueryModel * evenemant::afficher_tri()
+{QSqlQueryModel * model= new QSqlQueryModel();
+QSqlQuery query;
+id='%'+id+'%';
+query.prepare(" select * from evenement where id like :id order by id  ");
+query.bindValue(":id",id);
+query.exec();
+model->setQuery(query);
+model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+model->setHeaderData(1, Qt::Horizontal, QObject::tr("DATEDEBUT "));
+model->setHeaderData(2, Qt::Horizontal, QObject::tr("DATEFIN"));
+model->setHeaderData(3, Qt::Horizontal, QObject::tr("NOM"));
+model->setHeaderData(4, Qt::Horizontal, QObject::tr("LIEU"));
+    return model;
+}

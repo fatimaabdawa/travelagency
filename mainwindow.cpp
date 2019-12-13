@@ -1,44 +1,100 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "reserverhotel.h"
-#include "reservervoyage.h"
-#include <QSqlQuery>
+#include<prromtion.h>
+#include "qtableview.h"
 #include <QSqlQueryModel>
-#include <QComboBox>
+#include <QMessageBox>
+#include"login.h"
+#include"statistique.h"
 #include "smtp.h"
-#include "notification.h"
-#include "cstat.h"
+#include<QtPrintSupport/QPrinter>
+#include<QtPrintSupport/QPrintDialog>
+#include <QtMultimedia/QSound>
+#include <QtMultimedia/QMediaPlayer>
+#include<QDesktopServices>
+#include<QUrl>
+#include"QFile"
+#include"QTextStream"
+#include"smtp.h"
+#include"capteur.h"
+#include"ui_capteur.h"
+#include"arduino.h"
+#include <QPropertyAnimation>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    this->centralWidget()->setStyleSheet("background-image:url(C:/Users/Pc Store/Desktop/background_travel.jpg); background-position:center;");
-    ui->codedestination_rv_ajout->setModel(tmpajouth.CodeDestinationModel());
-    ui->reference_voyage_combo->setModel(tmpmodifvoyage.get_ref_ajoutes());
-    ui->idhotel_combobox->setModel(tmpajouth.CodeModelHotel());
-    ui->idhotel_supprimer->setModel(tmpajouth.NumeroPassePortReserverHotel());
-    ui->numeropasseport_combobox->setModel(tmpajouth.NumeroPasseportModelHotel());
-    ui->numeropasseport_rv_ajout->setModel(tmpajouth.NumeroPasseportModelHotel());
-    ui->tabresvoyage->setModel(tmpreservoyage.afficher());
-    ui->tabreshotel->setModel(tmpajouth.afficher());
-    player->setMedia(QUrl("C:/Users/Pc Store/Desktop/INTEGRA/yah/C.mp3"));
-    player->play();
-    connect(ui->sendBtn, SIGNAL(clicked()),this, SLOT(sendMail()));
-    connect(ui->exitBtn, SIGNAL(clicked()),this, SLOT(close()));
+
+    QPropertyAnimation *animation = new QPropertyAnimation(ui->animated, "geometry");
+        animation->setDuration(10000);
+        animation->setLoopCount(-1);
+        animation->setStartValue(QRect(-400, 10, 371, 71));
+        animation->setEndValue(QRect(700, 10, 371, 71));
+        animation->start();
+    int ret=a.connect_arduino();//lancer la cnx arduino
+    switch(ret)
+    {
+    case(0):qDebug()<<"arduino is available and connected to:"<<a.getarduino_port_name();
+        break;
+    case(1):qDebug()<<"arduino is available but not connected to:"<<a.getarduino_port_name();
+        break;
+    case(-1):qDebug()<<"arduino is not available";
+    }
+refresh();
+ui->tablepromotion->setModel(tmpprromotion.afficher());
+ui->tableView_evenement->setModel(tmpevenemant.afficher());
+connect(ui->sendBtn, SIGNAL(clicked()),this, SLOT(sendMail()));
+ connect(ui->exitBtn, SIGNAL(clicked()),this, SLOT(close()));
+
 }
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
-void MainWindow::sendMail()
+
+void  MainWindow::refresh()
 {
+ui->tableView_evenement->setModel(tmpevenemant.afficher());
+    ui->comboBox->setModel(tmpevenemant.afficher_list());
+    ui->comboBox_5->setModel(tmpevenemant.afficher_list());
+
+}
+
+
+
+
+
+void MainWindow::on_comboBox_supprimer_activated(const QString &arg1)
+{
+    ui->supp->setText(arg1);
+}
+
+
+
+void MainWindow::on_consulter_stat_clicked()
+{
+     QSound::play("C:/Users/asus/Downloads/boutton.wav");
+
+    ui->tablestat->setModel(tmpevenemant.stats());
+    statistique*a=new statistique();
+    a->show();
+}
+
+
+void MainWindow::sendMail()
+
+{QSound::play("C:/Users/asus/Downloads/boutton.wav");
+
     Smtp* smtp = new Smtp(ui->uname->text(), ui->paswd->text(), ui->server->text(), ui->port->text().toUShort());
     connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
 
 
     smtp->sendMail(ui->uname->text(), ui->rcpt->text() , ui->subject->text(),ui->msg->toPlainText());
+
 }
 
 void MainWindow::mailSent(QString status)
@@ -47,245 +103,289 @@ void MainWindow::mailSent(QString status)
         QMessageBox::warning( nullptr, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
 }
 
+void MainWindow::on_pushbouton_print_clicked()
+{QSound::play("C:/Users/asus/Downloads/boutton.wav");
+    QPrinter printer;
+        printer.setPrinterName("fatima");
+        QPrintDialog dialog(&printer,this);
+        if(dialog.exec()==QDialog::Rejected)
+            return;
+        ui->textEdit_print->print(&printer);
+}
 
-// CRUD VOYAGE
-
-void MainWindow::on_reservervoyage_ajout_clicked()
+void MainWindow::on_comboBox_2_activated(const QString &arg1)
 {
-    QString mail;
-    tmpreservoyage.set_codedestination(ui->codedestination_rv_ajout->currentText().toInt());
-    tmpreservoyage.set_numeropasseport(ui->numeropasseport_rv_ajout->currentText().toInt());
-    tmpreservoyage.set_nomdestination(ui->nomdestination_rv->text());
-    bool test=tmpreservoyage.ajouter();
-    if(test)
+
+    ui->supp->setText(arg1);
+
+}
+
+/*void MainWindow::on_comboBox_activated(const QString &arg1)
+{
+
+    tmpevenemant.setid(arg1);
+         tmpevenemant.chercher();
+    ui->nom->setText(tmpevenemant.get_nom());
+    ui->lieu->setText(tmpevenemant.get_lieu());
+
+}*/
+
+void MainWindow::on_supprimer_clicked()
+{QSound::play("C:/Users/asus/Downloads/boutton.wav");
+    if(tmpevenemant.supprimer(ui->supp->text())){
+        refresh();
+       ui->supp->clear();
+
+    }
+    evenemant e;
+     bool test;
+     test=e.modifier();
+     if(test)
+     { ui->tableView_evenement->setModel(tmpevenemant.afficher());
+
+        QMessageBox::information(nullptr,QObject::tr("supprimer evenement"),
+          QObject::tr(" evenement supprimer") ,QMessageBox::Cancel);
+
+       }else
+
+           QMessageBox::critical(nullptr,QObject::tr("supprimer evenement"),
+             QObject::tr("erreur") ,QMessageBox::Cancel) ;
+}
+
+void MainWindow::on_dateDebut_userDateChanged(const QDate &date)
+{
+
+    tmpevenemant.setdateD(date.toString());
+}
+
+void MainWindow::on_datefin_userDateChanged(const QDate &date)
+{
+    tmpevenemant.setdateF(date.toString());
+}
+
+void MainWindow::on_dated_userDateChanged(const QDate &date)
+{
+     tmpevenemant.setdateD(date.toString());
+}
+
+void MainWindow::on_datef_userDateChanged(const QDate &date)
+{
+
+    tmpevenemant.setdateF(date.toString());
+}
+
+void MainWindow::on_modifier_clicked_clicked()
+{QSound::play("C:/Users/asus/Downloads/boutton.wav");
+    tmpevenemant.setnom(ui->nom->text());
+     tmpevenemant.setlieu(ui->lieu->text());
+     if(tmpevenemant.modifier())
+     {
+         refresh();
+     }
+    evenemant e;
+     bool test;
+     test=e.modifier();
+     if(test)
+     { ui->tableView_evenement->setModel(tmpevenemant.afficher());
+
+        QMessageBox::information(nullptr,QObject::tr("modifier evenement"),
+          QObject::tr(" evenement modife") ,QMessageBox::Cancel);
+
+       }else
+
+           QMessageBox::critical(nullptr,QObject::tr("modifier evenement"),
+             QObject::tr("merci de remplir tout les champs correctement") ,QMessageBox::Cancel) ;
+}
+
+void MainWindow::on_facebook_clicked()
+{
+    QString link="https://www.facebook.com/mustdotravels/";
+    QDesktopServices::openUrl(QUrl(link));
+
+}
+
+void MainWindow::on_TRI_clicked()
+{
+    ui->tableView_evenement->setModel(tmpevenemant.afficher_tri());
+}
+
+void MainWindow::on_lineEdit_chercher_textChanged(const QString &arg1)
+{
+    ui->tableView_evenement->setModel(tmpevenemant.chercher_evenement(arg1));
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{QSound::play("C:/Users/asus/Downloads/boutton.wav");
+    QString link="https://www.instagram.com/smart_travel_agency18/";
+    QDesktopServices::openUrl(QUrl(link));
+}
+
+void MainWindow::on_youtube_clicked()
+{
+QSound::play("C:/Users/asus/Downloads/boutton.wav");
+    QString link="https://www.youtube.com/watch?v=gG2ABStEDcw";
+    QDesktopServices::openUrl(QUrl(link));
+}
+
+void MainWindow::on_pushButton_7_clicked()
+{QSound::play("C:/Users/asus/Downloads/boutton.wav");
+   QFile file("C:/Users/asus/Desktop/mailing/fatproject/myfile.txt");
+   if(!file.open(QFile::WriteOnly))
+   {
+       QMessageBox::warning(this,"title","file not open");
+   }
+   QTextStream out(&file);
+           QString text=ui->plainTextEdit2->toPlainText();
+           out<<text;
+           file.flush();
+           file.close();
+}
+
+void MainWindow::on_pushButton_6_clicked()
+{QSound::play("C:/Users/asus/Downloads/boutton.wav");
+    QFile file("C:/Users/asus/Desktop/mailing/fatproject/myfile.txt");
+    if(!file.open(QFile::ReadOnly))
     {
-        QMessageBox::information(nullptr, QObject::tr("ajout d'un voyage "),
-                                 QObject::tr("voyage ajouté.\n"
-                                             "Click cancel to exit."), QMessageBox::Cancel);
-        ui->tabresvoyage->setModel(tmpreservoyage.afficher());
-        ui->reference_voyage_combo->setModel(tmpmodifvoyage.get_ref_ajoutes());
-        ok.notification_ajout_destination(tmpreservoyage.get_nomdestination());
-        mail=tmpreservoyage.retourMailClient();
-        tmpreservoyage.mailing(mail);
+        QMessageBox::warning(this,"title","file not open");
     }
-    else
-    {
+    QTextStream in(&file);
+            QString text= in.readAll();
+            ui->plainTextEdit2->setPlainText(text);
 
-    }
-}
+            file.close();
+ }
 
-void MainWindow::on_datereservation_rv_ajout_userDateChanged(const QDate &date)
+
+void MainWindow::on_ajouterpro_clicked()
 {
-    tmpreservoyage.set_datederesevation(date.toString());
+    QSound::play("C:/Users/asus/Downloads/boutton.wav");
+       int id = ui->lineEdit_id1->text().toInt();
+       QString Ddebut = ui->dateEdit_debut->text();
+       QString Dfin = ui->dateEdit_fin->text();
+       int pourcentage = ui->lineEdit_pourcentage->text().toInt();
+        prromtion p(id,Ddebut,Dfin,pourcentage);
+   bool test= p.ajouter();
+   if(test)
+   {
+       ui->tablepromotion->setModel(tmpprromotion.afficher());
+       QMessageBox::information(nullptr, QObject::tr("Ajouter une promotion"),
+                         QObject::tr("promotion ajouté.\n"
+                                     "Click Cancel to exit."), QMessageBox::Cancel);
+
+       }
+         else
+             QMessageBox::critical(nullptr, QObject::tr("Ajouter une promotion"),
+                         QObject::tr("Erreur !.\n"
+                                     "Click Cancel to exit."), QMessageBox::Cancel);
 }
 
-void MainWindow::on_datedepart_rv_ajout_userDateChanged(const QDate &date)
+void MainWindow::on_modifierpro_clicked()
 {
-    tmpreservoyage.set_datedeaprt(date.toString());
+    QSound::play("C:/Users/asus/Downloads/boutton.wav");
+    int id= ui->lineEdit_idmodifpro->text().toInt();
+    QString Ddebut= ui->dateEdit_modifprodebut->text();
+    QString Dfin = ui->dateEdit_modifprofin->text();
+    int pourcentage = ui->lineEdit_modifpropourcentage->text().toInt();
+
+prromtion p;
+bool test;
+test=p.modifier(id,Ddebut,Dfin,pourcentage);
+if(test)
+{ ui->tablepromotion->setModel(tmpprromotion.afficher());
+
+   QMessageBox::information(nullptr,QObject::tr("modifier promotion"),
+     QObject::tr(" promotion modifer") ,QMessageBox::Cancel);
+
+  }else
+
+      QMessageBox::critical(nullptr,QObject::tr("modifier promotion"),
+        QObject::tr("merci de remplir tout les champs correctement") ,QMessageBox::Cancel) ;
 }
 
-void MainWindow::on_datearrivee_rv_ajout_userDateChanged(const QDate &date)
+void MainWindow::on_supprimerpro_2_clicked()
 {
-    tmpreservoyage.set_datearrivee(date.toString());
+    QSound::play("C:/Users/asus/Downloads/boutton.wav");
+   int id = ui->supprimerpro->text().toInt();
+   bool test=tmpprromotion.supprimer(id);
+   if(test)
+   {ui->tablepromotion->setModel(tmpprromotion.afficher());//refresh
+       QMessageBox::information(nullptr, QObject::tr("Supprimer une promotion"),
+                   QObject::tr("promotion supprimé.\n"
+                               "Click Cancel to exit."), QMessageBox::Cancel);
+
+   }
+   else
+       QMessageBox::critical(nullptr, QObject::tr("Supprimer une promotion"),
+                   QObject::tr("Erreur !.\n"
+                               "Click Cancel to exit."), QMessageBox::Cancel);
 }
 
 
-void MainWindow::on_numeropasseport_rv_ajout_currentTextChanged(const QString &arg1)
+
+void MainWindow::on_ajouterevent_clicked()
 {
-    tmpreservoyage.set_numeropasseport(arg1.toInt());
-}
+    QSound::play("C:/Users/asus/Downloads/boutton.wav");
 
-void MainWindow::on_typebillet_rv_ajout_currentTextChanged(const QString &arg1)
-{
-    tmpreservoyage.set_typebillet(arg1);
-}
+ QString  id = ui->lineEdit_id2->text();
+   QString dateD = ui->dateDebut->text();
+   QString dateF = ui->dateEdit_fin->text();
+    QString nom = ui->lineEdit_nom->text();
+     QString lieu = ui->lineEdit_lieu->text();
 
-void MainWindow::on_classe_rv_ajout_currentTextChanged(const QString &arg1)
-{
-    tmpreservoyage.set_classe(arg1);
-}
-
-void MainWindow::on_datereservation_rv_modif_userDateChanged(const QDate &date)
-{
-    tmpmodifvoyage.set_datederesevation(date.toString());
-}
-
-void MainWindow::on_datedepart_rv_modif_userDateChanged(const QDate &date)
-{
-    tmpmodifvoyage.set_datedeaprt(date.toString());
-}
-
-void MainWindow::on_datearrivee_rv_modif_userDateChanged(const QDate &date)
-{
-    tmpmodifvoyage.set_datearrivee(date.toString());
-}
-
-void MainWindow::on_rv_modifier_clicked()
-{
-    tmpmodifvoyage.set_classe(ui->classe_rv_modif->currentText());
-    tmpmodifvoyage.set_datedeaprt(ui->datedepart_rv_ajout->text());
-    tmpmodifvoyage.set_datearrivee(ui->datearrivee_rv_modif->text());
-    tmpmodifvoyage.set_datederesevation(ui->datereservation_rv_modif->text());
-    tmpmodifvoyage.set_typebillet(ui->typebillet_rv_modif->currentText());
-    tmpmodifvoyage.set_refvoyage(ui->reference_voyage_combo->currentText().toInt());
-    bool test = tmpmodifvoyage.modifier();
-    if(test)
-        ui->tabresvoyage->setModel(tmpreservoyage.afficher());
-}
-void MainWindow::on_radioButton_clicked()
-{
-    ui->tabresvoyage->setModel(tmpreservoyage.trie_refvoyage());
-}
-
-void MainWindow::on_radioButton_2_clicked()
-{
-    ui->tabresvoyage->setModel(tmpreservoyage.trie_destination());
-}
-void MainWindow::on_supprimer_rv_clicked()
-{
-    reservervoyage sup;
-    bool test = sup.supprimer(ui->reference_voyage_combo->currentText().toInt());
-    if(test)
-    {
-        ui->reference_voyage_combo->setModel(tmpmodifvoyage.get_ref_ajoutes());
-        ui->tabresvoyage->setModel(tmpreservoyage.afficher());
-    }
-}
-
-//CRUD RESERVATION HOTEL
-
-void MainWindow::on_Ajout_rhotel_clicked()
+    evenemant e(id,dateD,dateF,nom,lieu);
+bool test= e.ajouter();
+if(test)
 {
 
-    tmpajouth.set_duree(ui->duree_ajout->text().toInt());
-    tmpajouth.set_idhotel(ui->idhotel_combobox->currentText().toInt());
-    tmpajouth.set_numeropasseport(ui->numeropasseport_combobox->currentText().toInt());
-    //tmpajouth.RetourNomHotel();
-    tmpajouth.set_nom(ui->nomhotel_rhotel->text());
-    tmpajouth.set_nomclient(ui->nomclient_rhotel->text());
-    bool test=tmpajouth.ajouter();
-    if(test)
-    {
-        ui->tabreshotel->setModel(tmpajouth.afficher());
-        ui->numeropasseport_combobox->setModel(tmpajouth.NumeroPasseportModelHotel());
-        ui->idhotel_supprimer->setModel(tmpajouth.NumeroPassePortReserverHotel());
-        ok.notification_ajout_hotel(tmpajouth.get_nom());
-    }
+   ui->tableView_evenement->setModel(tmpevenemant.afficher());
+   QMessageBox::information(nullptr, QObject::tr("Ajouter un evenement"),
+                     QObject::tr("evenement ajouté.\n"
+                                 "Click Cancel to exit."), QMessageBox::Cancel);
+
+
+   }
+     else
+         QMessageBox::critical(nullptr, QObject::tr("Ajouter un evenement"),
+                     QObject::tr("Erreur !.\n"
+                                 "Click Cancel to exit."), QMessageBox::Cancel);
 }
-void MainWindow::on_datereservation_ajout_userDateChanged(const QDate &date)
+
+void MainWindow::on_comboBox_5_activated(const QString &arg1)
 {
-    tmpajouth.set_datederesevation(date.toString());
+
+    tmpevenemant.setid(arg1);
+         tmpevenemant.chercher();
+    ui->nom->setText(tmpevenemant.get_nom());
+    ui->lieu->setText(tmpevenemant.get_lieu());
 }
 
-void MainWindow::on_datearrivee_ajout_userDateChanged(const QDate &date)
+
+
+void MainWindow::update_label()
 {
-    tmpajouth.set_datearrivee(date.toString());
+    data=a.read_from_arduino();
+    if (data=="1")
+        ui->fatima->setText("ON");
+    else if(data=="0")
+        ui->fatima->setText("OFF");
 }
 
-void MainWindow::on_datedepart_ajout_userDateChanged(const QDate &date)
-{
-    tmpajouth.set_datedeaprt(date.toString());
-}
-
-
-
-void MainWindow::on_stat_bushonputt_clicked()
-{
-    cstat *s = new cstat();
-    s->show();
-}
-
-void MainWindow::on_horizontalSlider_sliderMoved(int position)
-{
-    player->setVolume(position);
-}
-
-void MainWindow::on_music_button_clicked()
-{
-    player->play();
-}
-
-void MainWindow::on_mute_button_clicked()
-{
-    player->pause();
-}
-
-void MainWindow::on_chercher_trier_rv_textChanged(const QString &arg1)
-{
-    QString seek = arg1;
-    ui->tabresvoyage->setModel(tmpreservoyage.chercher(seek));
-
-}
-
-
-
-
-
-void MainWindow::on_supprimer_rhotel_clicked()
-{
-    tmpreshotel.set_numeropasseport(ui->idhotel_supprimer->currentText().toInt());
-    bool test=tmpreshotel.supprimer();
-    if(test) {ui->tabreshotel->setModel(tmpreshotel.afficher());
-        ui->idhotel_supprimer->setModel(tmpreshotel.NumeroPassePortReserverHotel());
-        ui->numeropasseport_combobox->setModel(tmpreshotel.NumeroPasseportModelHotel());
-    }
-}
-void MainWindow::on_modifier_rhotel_clicked()
-{
-    tmpreshotel.set_numeropasseport(ui->idhotel_supprimer->currentText().toInt());
-    tmpreshotel.set_duree(ui->rh_duree_modif->text().toInt());
-    bool test=tmpreshotel.modifier();
-    if(test)
-        ui->tabreshotel->setModel(tmpreshotel.afficher());
-}
-
-void MainWindow::on_rh_dater_modifier_userDateChanged(const QDate &date)
-{
-    tmpreshotel.set_datederesevation(date.toString());
-}
-
-void MainWindow::on_rh_datea_modifier_userDateChanged(const QDate &date)
-{
-    tmpreshotel.set_datearrivee(date.toString());
-}
-
-void MainWindow::on_rh_dated_modifier_userDateChanged(const QDate &date)
-{
-    tmpreshotel.set_datedeaprt(date.toString());
-}
-
-void MainWindow::on_horizontalSlider_2_sliderMoved(int position)
-{
-    player->setVolume(position);
-}
 
 void MainWindow::on_pushButton_clicked()
 {
-    player->play();
+   a.write_to_arduino("1");
+   if(a.getserial()->waitForReadyRead(10))
+      data=a.read_from_arduino();
+      qDebug() << "data : " << data;
 }
 
-void MainWindow::on_pushButton_2_clicked()
+void MainWindow::on_OFF_pushbutton_clicked()
 {
-    player->pause();
+ a.write_to_arduino("0");
+ if(a.getserial()->waitForReadyRead(10))
+    data=a.read_from_arduino();
+    qDebug() << "data : " << data;
 }
 
 
-
-void MainWindow::on_idhotel_combobox_currentIndexChanged(const QString &arg1)
-{
-    QString nom=tmpajouth.RetourNomHotel(arg1);
-    ui->nomhotel_rhotel->setText(nom);
-}
-
-void MainWindow::on_numeropasseport_combobox_currentIndexChanged(const QString &arg1)
-{
-    QString nom=tmpajouth.retourNomClient(arg1.toInt());
-    ui->nomclient_rhotel->setText(nom);
-}
-
-void MainWindow::on_codedestination_rv_ajout_currentIndexChanged(const QString &arg1)
-{
-    QString name = tmpreservoyage.getNomDestinationFromtable(arg1.toInt());
-    ui->nomdestination_rv->setText(name);
-}
 

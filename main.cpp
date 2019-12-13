@@ -1,36 +1,23 @@
 #include "mainwindow.h"
-#include <connexion.h>
 #include <QApplication>
-#include "reserverhotel.h"
-#include "reservervoyage.h"
 #include <QMessageBox>
-#include <iostream>
-#include <QFile>
-#include "login.h"
-#include "notification.h"
+#include "connexion.h"
+#include <QtDebug>
+#include"evenemant.h"
+#include"login.h"
 int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
-       Connexion c;
-       QFile styleFile( ":/img/darkorng.qss" );
-       styleFile.open( QFile::ReadOnly );
+{  QApplication a(argc, argv);
 
-       // Apply the loaded stylesheet
-       QString style( styleFile.readAll() );
-       a.setStyleSheet( style );
+    Connexion c;
+ MainWindow w;
 
-       bool test=c.ouvrirConnexion();
-   if(test){
+  if(c.ouvrirConnexion())
+  {
+  w.show();
+  login l;
+  l.show();
+     return a.exec();
+  }
+  return 0;
 
-   MainWindow w;
-       login l;
-       l.show();
-       notification notif;
-       notif.notification_Ouverture("");
-       //QMessageBox::information(nullptr,QObject::tr("Bienvenue !"),"Vous etes connecte a la base !");
-       QObject::connect(&l,&login::adminSignal,&w,&MainWindow::show);
-       return a.exec();
-   }
-   else //QMessageBox::information(nullptr,QObject::tr("ERROR !"),"Probleme de connexion a la base !");
-       return 0;
 }

@@ -1,75 +1,82 @@
 #include "login.h"
 #include "ui_login.h"
-#include "mainwindow.h"
-#include <QApplication>
-#include "mainwindow.h"
-#include "login.h"
-#include "connexion.h"
 #include <QMessageBox>
-#include "notification.h"
-#include "smtp.h"
-#include <iostream>
-#include <QPropertyAnimation>
-#include <QTimer>
-login::login(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::login)
+#include"mainwindow.h"
+#include"ui_mainwindow.h"
+#include"QTableWidget"
+#include"QTableView"
+#include"QTableWidgetItem"
+#include <QSound>
+
+
+
+login::login(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::login)
 {
     ui->setupUi(this);
-    //this->centralWidget()->setStyleSheet("background-image:url(C:/Users/Pc Store/Desktop/background_travel.jpg); background-position:center;");
-    //QPixmap back1("C:/Users/Pc Store/Desktop/background_travel.jpg)");
-    QPropertyAnimation *animationConnect = new QPropertyAnimation(ui->connecter,"geometry");
-    // QPropertyAnimation *animationID = new QPropertyAnimation(ui->identifier,"geometry");
-    // QPropertyAnimation *animationPW = new QPropertyAnimation(ui->password,"geometry");
-    animationConnect->setDuration(5000);
-    animationConnect->setStartValue(QRect(0,0,500,150));
-    animationConnect->setEndValue(QRect(400,400,100,50));
-    animationConnect->start();
-    pl.setMedia(QUrl("C:/Users/Haboub/Desktop/Musi9/Daryl Hall & John Oates - Maneater (Official Music Video).mp3"));
-    pl.play();
-/*
- *
-    animationID->setDuration(2000);
-    animationID->setStartValue(QRect(0,0,500,150));
-    animationID->setEndValue(QRect(100,200,100,30));
-    animationID->start();
 
-    animationPW->setDuration(2000);
-    animationPW->setStartValue(QRect(0,0,500,150));
-    animationPW->setEndValue(QRect(100,100,100,30));
-    animationPW->start();*/
-    ui->Wrongpassword->hide();
+
+     db = QSqlDatabase::addDatabase("QODBC");
+    db.setDatabaseName("Source_Projet2A");
+    db.setUserName("fatima");//inserer nom de l'utilisateur
+    db.setPassword("esprit19");//inserer mot de passe de cet utilisateur
+
+     if(!db.open())
+         ui->label->setText("failed to open database");
+     else
+         ui->label->setText("connected...");
 }
-
 
 login::~login()
 {
     delete ui;
 }
 
-
-void login::on_connecter_clicked()
+void login::on_pushButton_clicked()
 {
-    QString id=ui->identifier->text();
-    QString pw = ui->password->text();
-  if(id == "oussema" and pw == "oussema")
-    {
-      emit adminSignal();
-      close();
-    }else
-      {
-      ui->Wrongpassword->show();
+    QSound::play("C:/Users/asus/Downloads/boutton.wav");
+    QString USERNAME,PASSWORD;
+    ui->lineEdit_username->text();
+    ui->lineEdit_password->text();
+
+
+
+
+      if(!db.isOpen()){
+          qDebug()<<"failed to open database";
+      return;
       }
+
+       QSqlQuery qry;
+      if(qry.exec("SELECT FROM * USERNAME,PASSWORD from EMPLOYE WHERE USERNAME = :USERNAME and PASSWORD = :PASSWORD "))
+          qry.bindValue(":USERNAME", USERNAME);
+         qry.bindValue(":PASSWORD", PASSWORD);
+
+
+
+      {
+             int count=0;
+             while (qry.next())
+             {
+                count ++;
+             }
+
+       if(count==1)
+       ui->label->setText("username and password  not correct");
+
+
+       if(count<1){
+       ui->label->setText("username and password are correct");
+       this->hide();
+
+
+
+
+       }
 }
 
-void login::on_showpassword_clicked(bool checked)
-{
-    if(checked)
-    {
-    ui->password->setEchoMode(QLineEdit::EchoMode(0));
-    }
-    else
-    {
-    ui->password->setEchoMode(QLineEdit::EchoMode(2));
-    }
-}
+
+
+     }
+

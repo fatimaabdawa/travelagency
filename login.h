@@ -1,31 +1,33 @@
 #ifndef LOGIN_H
 #define LOGIN_H
+#include<QtSql>
+#include<QtDebug>
+#include<QFileInfo>
+#include <QDialog>
+#include"prromtion.h"
+#include"evenemant.h"
+#include"mainwindow.h"
+#include <Qsound>
 
-#include <QMainWindow>
-#include <QPixmap>
-#include <QMediaPlayer>
+namespace Ui {
+class login;
+}
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class login; }
-QT_END_NAMESPACE
-
-class login : public QMainWindow
+class login : public QDialog
 {
     Q_OBJECT
 
 public:
-    login(QWidget *parent = nullptr);
+    explicit login(QWidget *parent = nullptr);
     ~login();
-signals :
-    void adminSignal();
+
 private slots:
-    void on_connecter_clicked();
-
-
-    void on_showpassword_clicked(bool checked);
+    void on_pushButton_clicked();
 
 private:
     Ui::login *ui;
-    QMediaPlayer pl;
+     QSqlDatabase db;
+
 };
+
 #endif // LOGIN_H
