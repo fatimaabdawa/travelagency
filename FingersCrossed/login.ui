@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>login</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="connecter">
     <property name="geometry">
@@ -47,10 +50,6 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
     <property name="text">
      <string>Se connecter</string>
     </property>
-    <property name="icon">
-     <iconset resource="rsc.qrc">
-      <normaloff>:/img/backrdblack.jpg</normaloff>:/img/backrdblack.jpg</iconset>
-    </property>
     <property name="iconSize">
      <size>
       <width>500</width>
@@ -72,6 +71,9 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLineEdit" name="identifier">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Prenom&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
          <property name="placeholderText">
           <string>Identifiant</string>
          </property>
@@ -85,6 +87,9 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
         <widget class="QLineEdit" name="password">
          <property name="contextMenuPolicy">
           <enum>Qt::PreventContextMenu</enum>
+         </property>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Nom&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="echoMode">
           <enum>QLineEdit::Password</enum>
@@ -124,14 +129,17 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
    <widget class="QLabel" name="Wrongpassword_2">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>-10</x>
       <y>520</y>
-      <width>421</width>
+      <width>831</width>
       <height>41</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;INFOS&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:6pt; font-weight:600;&quot;&gt;Les identifiants &amp;amp; mots de passe sont par défault initialisés a vos prénoms et noms respectivement.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; color:#ff5500;&quot;&gt;Les identifiants &amp;amp; mots de passe sont par défault initialisés a vos prénoms et noms respectivement.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QPushButton" name="pushButton">
@@ -160,12 +168,26 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
      <string>OFF</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton_3">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>110</y>
+      <width>80</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>sendchaine</string>
+    </property>
+   </widget>
    <zorder>layoutWidget</zorder>
    <zorder>connecter</zorder>
    <zorder>Wrongpassword</zorder>
    <zorder>Wrongpassword_2</zorder>
    <zorder>pushButton</zorder>
    <zorder>pushButton_2</zorder>
+   <zorder>pushButton_3</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -179,8 +201,6 @@ qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 0, 0, 255),
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources>
-  <include location="rsc.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -18,12 +18,28 @@ integratedone::integratedone(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    //ARDUINO
+    int ret=A.connect_arduino(); // lancer la connexion à arduino
+    switch(ret){
+    case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
+        break;
+    case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+        break;
+    case(-1):qDebug() << "arduino is not available";
+    }
+    //SOUND
+    m->setMedia(QUrl::fromLocalFile("C:/Users/Haboub/Documents/FingersCrossed/click.mp3"));
+
+   // ui->rechercheclientvip->setGeometry(10,40,800,800);
+
+
     QTimer *timer=new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(showTime()));
     timer->start();
     QDate date=QDate::currentDate();
     QString date_t=date.toString();
-    //ui->mydate->setText(date_t);
+    ui->mydate->setText(date_t);
+    ui->mydate->setGeometry(40,1,40,40);
 
     //MOHAMED
 
@@ -72,6 +88,15 @@ integratedone::integratedone(QWidget *parent) :
 
 }
 
+ // THE TRUE ENEMY.
+
+void integratedone::showTime()
+{
+    QTime time=QTime::currentTime();
+    QString time_t=time.toString("hh : mm : ss");
+    ui->myclock->setText(time_t);
+}
+
 integratedone::~integratedone()
 {
     delete ui;
@@ -82,27 +107,41 @@ integratedone::~integratedone()
 
 void integratedone::on_intdestinations_clicked()
 {
+    m->play();
     ui->whole_in_one->setCurrentIndex(1);
 }
 
 void integratedone::on_intreservations_clicked()
 {
+    m->play();
     ui->whole_in_one->setCurrentIndex(4);
 }
 
 void integratedone::on_intemployes_clicked()
 {
+    m->play();
     ui->whole_in_one->setCurrentIndex(2);
 }
 
 void integratedone::on_intclients_clicked()
 {
+    m->play();
     ui->whole_in_one->setCurrentIndex(0);
+    QMediaPlayer *m= new QMediaPlayer();
+    m->setMedia(QUrl::fromLocalFile("/Users/Haboub/Documents/FingersCrossed/acceuil.mp3"));
+    m->play();
 }
 
 void integratedone::on_intevents_clicked()
 {
+    m->play();
     ui->whole_in_one->setCurrentIndex(3);
+}
+
+void integratedone::on_intarduino_clicked()
+{
+    m->play();
+   ui->whole_in_one->setCurrentIndex(5);
 }
 
 // CLIENTS MODULE FUNCTIONS.
@@ -418,6 +457,7 @@ void integratedone::on_ajouter_destination_clicked()
     bool test=tmpdestination.ajouter();
     if(test)
     {
+        m->play();
         ok.notification_ajout_destination(nom);
         ui->tableView->setModel(tmpdestination.afficher());
         ui->comboBox->setModel(tmpdestination.ModelCodeDestinations());
@@ -431,6 +471,7 @@ void integratedone::on_ajouter_destination_clicked()
 
 void integratedone::on_SupprimerDestination_clicked()
 {
+    m->play();
     int code= ui->code_asupprimer->currentText().toInt();
     bool test=tmpdestination.supprimer(code);
     if(test)
@@ -447,6 +488,7 @@ void integratedone::on_SupprimerDestination_clicked()
 
 void integratedone::on_ajouter_hotel_clicked()
 {
+    m->play();
     tmphotel.setEtoiles(ui->etoiles_ajout_hotel->text().toInt());
     tmphotel.setNom(ui->nom_ajouter_hotel->text());
     tmphotel.setAdresse(ui->adresse_ajout_hotel->text());
@@ -467,6 +509,7 @@ void integratedone::on_ajouter_hotel_clicked()
 
 void integratedone::on_supprimer_hotel_clicked()
 {
+    m->play();
     tmphotel.setiIdhotel(ui->idhotel_asupprimer->currentText().toInt());
     bool test=tmphotel.supprimer();
     if(test)
@@ -494,6 +537,7 @@ void integratedone::on_comboBox_currentIndexChanged()
 
 void integratedone::on_Modifier_clicked()
 {
+    m->play();
     int code =ui->comboBox->currentText().toInt();
     int promo = ui->promo_amodifier->text().toInt();
     QString description = ui->description_amodifier->text();
@@ -527,6 +571,7 @@ void integratedone::on_comboBox_2_currentIndexChanged()
 
 void integratedone::on_ModifierHotel_clicked()
 {
+    m->play();
     tmphotel.setiIdhotel(ui->comboBox_2->currentText().toInt());
     tmphotel.setCoutparnuit(ui->couthotel_amodifier->text().toInt());
     tmphotel.setAdresse(ui->adressehotel_amodifier->text());
@@ -553,6 +598,7 @@ void integratedone::on_trierChercher_2_textChanged(const QString &arg1)
 
 void integratedone::on_checkBox_stateChanged(int arg1)
 {
+    m->play();
     etat=arg1;
     ui->tableView->setModel(tmpdestination.recherche(valeur,etat));
 }
@@ -566,6 +612,7 @@ void integratedone::on_trierChercher_textChanged(const QString &arg1)
 
 void integratedone::on_checkBox_2_stateChanged(int arg1)
 {
+    m->play();
     int b=arg1;
     etat=b;
     ui->tableView2->setModel(tmphotel.recherche(valeur,etat));
@@ -574,6 +621,7 @@ void integratedone::on_checkBox_2_stateChanged(int arg1)
 
 void integratedone::on_pushButton_clicked()
 {
+    m->play();
     QString receiver;
     QString objet;
     QString contenu;
@@ -622,6 +670,7 @@ void integratedone::sendMail()
 
 void integratedone::on_reservervoyage_ajout_clicked()
 {
+    m->play();
     QString mail;
     tmpreservoyage.set_codedestination(ui->codedestination_rv_ajout->currentText().toInt());
     tmpreservoyage.set_numeropasseport(ui->numeropasseport_rv_ajout->currentText().toInt());
@@ -692,6 +741,7 @@ void integratedone::on_datearrivee_rv_modif_userDateChanged(const QDate &date)
 
 void integratedone::on_rv_modifier_clicked()
 {
+    m->play();
     tmpmodifvoyage.set_classe(ui->classe_rv_modif->currentText());
     tmpmodifvoyage.set_datedeaprt(ui->datedepart_rv_ajout->text());
     tmpmodifvoyage.set_datearrivee(ui->datearrivee_rv_modif->text());
@@ -704,15 +754,18 @@ void integratedone::on_rv_modifier_clicked()
 }
 void integratedone::on_radioButton_clicked()
 {
+    m->play();
     ui->tabresvoyage->setModel(tmpreservoyage.trie_refvoyage());
 }
 
 void integratedone::on_radioButton_2_clicked()
 {
+    m->play();
     ui->tabresvoyage->setModel(tmpreservoyage.trie_destination());
 }
 void integratedone::on_supprimer_rv_clicked()
 {
+    m->play();
     reservervoyage sup;
     bool test = sup.supprimer(ui->reference_voyage_combo->currentText().toInt());
     if(test)
@@ -726,7 +779,7 @@ void integratedone::on_supprimer_rv_clicked()
 
 void integratedone::on_Ajout_rhotel_clicked()
 {
-
+    m->play();
     tmpajouth.set_duree(ui->duree_ajout->text().toInt());
     tmpajouth.set_idhotel(ui->idhotel_combobox->currentText().toInt());
     tmpajouth.set_numeropasseport(ui->numeropasseport_combobox->currentText().toInt());
@@ -772,11 +825,13 @@ void integratedone::on_horizontalSlider_sliderMoved(int position)
 
 void integratedone::on_music_button_clicked()
 {
+    m->play();
     player->play();
 }
 
 void integratedone::on_mute_button_clicked()
 {
+    m->play();
     player->pause();
 }
 
@@ -792,6 +847,7 @@ void integratedone::on_chercher_trier_rv_textChanged(const QString &arg1)
 
 void integratedone::on_supprimer_rhotel_clicked()
 {
+    m->play();
     tmpreshotel.set_numeropasseport(ui->idhotel_supprimer->currentText().toInt());
     bool test=tmpreshotel.supprimer();
     if(test) {ui->tabreshotel->setModel(tmpreshotel.afficher());
@@ -801,6 +857,7 @@ void integratedone::on_supprimer_rhotel_clicked()
 }
 void integratedone::on_modifier_rhotel_clicked()
 {
+    m->play();
     tmpreshotel.set_numeropasseport(ui->idhotel_supprimer->currentText().toInt());
     tmpreshotel.set_duree(ui->rh_duree_modif->text().toInt());
     bool test=tmpreshotel.modifier();
@@ -863,11 +920,13 @@ void integratedone::on_codedestination_rv_ajout_currentIndexChanged(const QStrin
 
 void integratedone::on_radioButton_3_clicked()
 {
+    m->play();
       ui->tabreshotel->setModel(tmpreshotel.trie_idhotel());
 }
 
 void integratedone::on_radioButton_4_clicked()
 {
+    m->play();
      ui->tabreshotel->setModel(tmpreshotel.trie_nomH());
 }
 
@@ -1050,7 +1109,8 @@ void integratedone::on_pushButton_7_clicked()
 }
 
 void integratedone::on_pushButton_6_clicked()
-{QSound::play("qrc:/boutton.wav");
+{
+    QSound::play("qrc:/boutton.wav");
     QFile file("C:/Users/asus/Desktop/mailing/fatproject/myfile.txt");
     if(!file.open(QFile::ReadOnly))
     {
@@ -1165,4 +1225,66 @@ void integratedone::on_comboBox_5_activated(const QString &arg1)
          tmpevenemant.chercher();
     ui->nom->setText(tmpevenemant.get_nom());
     ui->lieu->setText(tmpevenemant.get_lieu());
+}
+
+/*
+
+void integratedone::on_rechercheclientvip_currentChanged(int index)
+{
+    m->play();
+
+}
+
+void integratedone::on_toolBox_currentChanged(int index)
+{
+    m->play();
+}
+
+void integratedone::on_tabWidget_5_currentChanged(int index)
+{
+    m->play();
+}
+
+void integratedone::on_tabWidget_7_currentChanged(int index)
+{
+    m->play();
+}
+
+void integratedone::on_toolBox_2_currentChanged(int index)
+{
+    m->play();
+}
+*/
+
+void integratedone::on_whole_in_one_currentChanged(int arg1)
+{
+    m->play();
+}
+
+void integratedone::on_onpb_clicked()
+{
+    QByteArray byte = "1";
+
+    A.write_to_arduino(byte);
+    if(A.getserial()->waitForReadyRead(10))
+        data=A.read_from_arduino();
+    qDebug() << "data : " << data;
+}
+
+void integratedone::on_offpb_clicked()
+{
+    QByteArray byte = "0";
+
+    A.write_to_arduino(byte);
+    if(A.getserial()->waitForReadyRead(10))
+        data=A.read_from_arduino();
+    qDebug() << "data : " << data;
+}
+
+void integratedone::on_LCDshow_clicked()
+{
+ destination d;
+ QString oe;
+ oe=d.retourneFirstPromoDestination();
+ A.write_arduino(oe.toUtf8());
 }

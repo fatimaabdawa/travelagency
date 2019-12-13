@@ -80,7 +80,7 @@ QSqlQueryModel * hotel:: recherche(QString valeur,int etat)
     if(etat==1)
     { query.prepare("SELECT * FROM hotel WHERE NOM LIKE :valeur OR adresse like :valeur order by NOM");}
     else
-    { query.prepare("SELECT * FROM hotel WHERE NOM LIKE :valeur  adresse like :valeur  order by NOM desc");}
+    { query.prepare("SELECT * FROM hotel WHERE NOM LIKE :valeur OR adresse like :valeur  order by NOM desc");}
     valeur="%"+valeur+"%";
     query.bindValue(":valeur",valeur);
     query.exec();
@@ -109,4 +109,24 @@ void hotel:: chercher()
             coutparnuit = query1.value(4).toInt();
             codedestination = query1.value(5).toInt();
         }
+}
+
+void hotel::pkeor(QString q, int iq)
+{
+
+    QString iqq = QString::number(iq);
+    QSqlQuery query;
+    query.prepare("select * from hotel where nom= '"+q+"' or adresse = '"+q+"' or etoiles = '"+iqq+"' or idhotel ='"+iqq+"' or coutparnuit = '"+iqq+"'");
+    query.bindValue(":iqq",iq);
+    query.bindValue(":q",q);
+    query.exec();
+        while(query.next())
+    {
+            nom = query.value(0).toString();
+            adresse = query.value(1).toString();
+            etoiles = query.value(2).toInt();
+            idhotel = query.value(3).toInt();
+            coutparnuit = query.value(4).toString().toInt();
+    }
+
 }

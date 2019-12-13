@@ -22,13 +22,14 @@ public:
 
 signals :
     void adminSignal();
+    void habibSignal();
     void MohamedSignal();
     void OussemaSignal();
     void salahSignal();
     void fatimaSignal();
     void skanderSignal();
 private slots:
-    void update_label();
+    //void update_label();
 
     void on_connecter_clicked();
     void on_showpassword_clicked(bool checked);
@@ -36,6 +37,8 @@ private slots:
     void on_pushButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::login *ui;

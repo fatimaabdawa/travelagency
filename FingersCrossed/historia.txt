@@ -1,0 +1,1 @@
+Thu Dec 12 20:01:58 2019 L'ajout d'un produit dans la base de donnees de reference = bahamas a ete effectuee avec succees

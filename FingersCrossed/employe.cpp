@@ -125,8 +125,18 @@ QSqlQueryModel *employe::empmois()
 {
     QSqlQueryModel *model=new QSqlQueryModel ;
     QSqlQuery query;
-    query.prepare("select count(idemp)as count from employe group by idemp order by count");
+    query.prepare("select count(idemp)as nombre,departement from employe group by departement");
+    query.exec();
     model->setQuery(query);
     return model;
 }
 
+QSqlQueryModel *employe::salaireavg()
+{
+    QSqlQueryModel *model=new QSqlQueryModel ;
+    QSqlQuery query;
+    query.prepare("select avg(salaire) as salaire_moyen from contrat");
+    query.exec();
+    model->setQuery(query);
+    return model;
+}

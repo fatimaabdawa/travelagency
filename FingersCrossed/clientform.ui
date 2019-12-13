@@ -67,7 +67,7 @@
        <enum>QTabWidget::Triangular</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tab2">
        <attribute name="title">
@@ -486,156 +486,6 @@
        <attribute name="title">
         <string>Mailing</string>
        </attribute>
-       <widget class="QLineEdit" name="port">
-        <property name="geometry">
-         <rect>
-          <x>403</x>
-          <y>108</y>
-          <width>377</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>465</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_31">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>232</y>
-          <width>48</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Subject:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_32">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>170</y>
-          <width>60</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Password:</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="server">
-        <property name="geometry">
-         <rect>
-          <x>403</x>
-          <y>77</y>
-          <width>377</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>smtp.gmail.com</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="rcpt">
-        <property name="geometry">
-         <rect>
-          <x>403</x>
-          <y>201</y>
-          <width>377</width>
-          <height>22</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QPlainTextEdit" name="msg">
-        <property name="geometry">
-         <rect>
-          <x>403</x>
-          <y>302</y>
-          <width>377</width>
-          <height>136</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="paswd">
-        <property name="geometry">
-         <rect>
-          <x>403</x>
-          <y>170</y>
-          <width>377</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="inputMask">
-         <string/>
-        </property>
-        <property name="echoMode">
-         <enum>QLineEdit::Password</enum>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_33">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>302</y>
-          <width>55</width>
-          <height>28</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Message:</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="subject">
-        <property name="geometry">
-         <rect>
-          <x>403</x>
-          <y>232</y>
-          <width>377</width>
-          <height>22</height>
-         </rect>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_34">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>139</y>
-          <width>63</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Username:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_35">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>201</y>
-          <width>69</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Recipant to:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_36">
-        <property name="geometry">
-         <rect>
-          <x>320</x>
-          <y>77</y>
-          <width>76</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Smtp-server:</string>
-        </property>
-       </widget>
        <widget class="QPushButton" name="exitBtn">
         <property name="geometry">
          <rect>
@@ -662,27 +512,46 @@
          <string>Envoyer</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_37">
+       <widget class="QLineEdit" name="about_line">
         <property name="geometry">
          <rect>
-          <x>320</x>
-          <y>108</y>
-          <width>70</width>
-          <height>22</height>
+          <x>220</x>
+          <y>60</y>
+          <width>241</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>Objet du mail</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="receiver_line">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>20</y>
+          <width>151</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="placeholderText">
+         <string>Récipiant</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="text_line">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>110</y>
+          <width>571</width>
+          <height>261</height>
          </rect>
         </property>
         <property name="text">
-         <string>Server port:</string>
+         <string/>
         </property>
-       </widget>
-       <widget class="QLineEdit" name="uname">
-        <property name="geometry">
-         <rect>
-          <x>403</x>
-          <y>139</y>
-          <width>377</width>
-          <height>22</height>
-         </rect>
+        <property name="placeholderText">
+         <string>Texte</string>
         </property>
        </widget>
       </widget>

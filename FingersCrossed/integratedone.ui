@@ -18,34 +18,34 @@
     <property name="geometry">
      <rect>
       <x>240</x>
-      <y>10</y>
-      <width>1271</width>
-      <height>841</height>
+      <y>60</y>
+      <width>1291</width>
+      <height>741</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QToolBox" name="rechercheclientvip">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1281</width>
-        <height>651</height>
+        <x>10</x>
+        <y>40</y>
+        <width>1151</width>
+        <height>601</height>
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_3">
        <property name="geometry">
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>100</width>
-         <height>30</height>
+         <width>1151</width>
+         <height>547</height>
         </rect>
        </property>
        <attribute name="label">
@@ -70,7 +70,7 @@
           <x>10</x>
           <y>10</y>
           <width>1331</width>
-          <height>561</height>
+          <height>601</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -245,9 +245,9 @@
          <widget class="QLabel" name="label_8">
           <property name="geometry">
            <rect>
-            <x>40</x>
-            <y>470</y>
-            <width>211</width>
+            <x>70</x>
+            <y>430</y>
+            <width>171</width>
             <height>20</height>
            </rect>
           </property>
@@ -259,7 +259,7 @@
           <property name="geometry">
            <rect>
             <x>260</x>
-            <y>500</y>
+            <y>470</y>
             <width>111</width>
             <height>28</height>
            </rect>
@@ -274,17 +274,7 @@
             <x>410</x>
             <y>100</y>
             <width>721</width>
-            <height>441</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="rechercheclient">
-          <property name="geometry">
-           <rect>
-            <x>1180</x>
-            <y>50</y>
-            <width>113</width>
-            <height>22</height>
+            <height>401</height>
            </rect>
           </property>
          </widget>
@@ -441,8 +431,8 @@
          <widget class="QComboBox" name="comboBoxsuppclient">
           <property name="geometry">
            <rect>
-            <x>260</x>
-            <y>470</y>
+            <x>250</x>
+            <y>430</y>
             <width>111</width>
             <height>22</height>
            </rect>
@@ -474,8 +464,8 @@
          <widget class="QLabel" name="label_39">
           <property name="geometry">
            <rect>
-            <x>940</x>
-            <y>60</y>
+            <x>490</x>
+            <y>70</y>
             <width>81</width>
             <height>16</height>
            </rect>
@@ -487,8 +477,8 @@
          <widget class="QLineEdit" name="rechercheclient_3">
           <property name="geometry">
            <rect>
-            <x>1020</x>
-            <y>60</y>
+            <x>560</x>
+            <y>70</y>
             <width>113</width>
             <height>22</height>
            </rect>
@@ -706,8 +696,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1281</width>
-         <height>597</height>
+         <width>1151</width>
+         <height>547</height>
         </rect>
        </property>
        <attribute name="label">
@@ -914,9 +904,9 @@
          <widget class="QLabel" name="label_21">
           <property name="geometry">
            <rect>
-            <x>0</x>
-            <y>440</y>
-            <width>211</width>
+            <x>30</x>
+            <y>420</y>
+            <width>171</width>
             <height>20</height>
            </rect>
           </property>
@@ -927,8 +917,8 @@
          <widget class="QPushButton" name="pushButton_suppclientvip">
           <property name="geometry">
            <rect>
-            <x>206</x>
-            <y>470</y>
+            <x>210</x>
+            <y>450</y>
             <width>121</width>
             <height>28</height>
            </rect>
@@ -1113,8 +1103,8 @@
          <widget class="QLineEdit" name="rechercheclientvip_2">
           <property name="geometry">
            <rect>
-            <x>1230</x>
-            <y>30</y>
+            <x>880</x>
+            <y>10</y>
             <width>113</width>
             <height>22</height>
            </rect>
@@ -1133,8 +1123,8 @@
          <widget class="QLabel" name="label_30">
           <property name="geometry">
            <rect>
-            <x>1150</x>
-            <y>30</y>
+            <x>810</x>
+            <y>10</y>
             <width>81</width>
             <height>16</height>
            </rect>
@@ -1146,8 +1136,8 @@
          <widget class="QComboBox" name="comboBoxsuppclientvip">
           <property name="geometry">
            <rect>
-            <x>206</x>
-            <y>440</y>
+            <x>210</x>
+            <y>420</y>
             <width>121</width>
             <height>22</height>
            </rect>
@@ -1166,8 +1156,8 @@
          <widget class="QLineEdit" name="rechercheclient_2">
           <property name="geometry">
            <rect>
-            <x>1020</x>
-            <y>20</y>
+            <x>670</x>
+            <y>10</y>
             <width>113</width>
             <height>22</height>
            </rect>
@@ -1176,8 +1166,8 @@
          <widget class="QLabel" name="label_38">
           <property name="geometry">
            <rect>
-            <x>930</x>
-            <y>20</y>
+            <x>590</x>
+            <y>10</y>
             <width>81</width>
             <height>16</height>
            </rect>
@@ -1190,15 +1180,28 @@
        </widget>
       </widget>
      </widget>
+     <widget class="QLabel" name="label_157">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>1151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#f4a70d;&quot;&gt;MODULE CLIENTS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_2">
      <widget class="QToolBox" name="toolBox">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>1041</width>
-        <height>651</height>
+        <x>10</x>
+        <y>40</y>
+        <width>1211</width>
+        <height>661</height>
        </rect>
       </property>
       <property name="currentIndex">
@@ -1209,8 +1212,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1041</width>
-         <height>597</height>
+         <width>1211</width>
+         <height>607</height>
         </rect>
        </property>
        <attribute name="label">
@@ -1724,8 +1727,8 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>1041</width>
-         <height>597</height>
+         <width>1211</width>
+         <height>607</height>
         </rect>
        </property>
        <attribute name="label">
@@ -2185,13 +2188,26 @@ QHeaderView::section:vertical
        </widget>
       </widget>
      </widget>
+     <widget class="QLabel" name="label_156">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>0</y>
+        <width>721</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#f4a70d;&quot;&gt;MODULE DESTINATIONS-HOTELS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_9">
      <widget class="QTabWidget" name="tabWidget_5">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>0</y>
+        <x>10</x>
+        <y>30</y>
         <width>1311</width>
         <height>671</height>
        </rect>
@@ -3580,40 +3596,40 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
           <property name="geometry">
            <rect>
             <x>1090</x>
-            <y>360</y>
+            <y>371</y>
             <width>191</width>
-            <height>192</height>
+            <height>181</height>
            </rect>
           </property>
          </widget>
          <widget class="QTableView" name="tableView_2">
           <property name="geometry">
            <rect>
-            <x>330</x>
+            <x>310</x>
             <y>410</y>
-            <width>256</width>
-            <height>61</height>
+            <width>421</width>
+            <height>141</height>
            </rect>
           </property>
          </widget>
          <widget class="QLabel" name="label_111">
           <property name="geometry">
            <rect>
-            <x>410</x>
+            <x>380</x>
             <y>390</y>
-            <width>111</width>
-            <height>16</height>
+            <width>141</width>
+            <height>21</height>
            </rect>
           </property>
           <property name="text">
-           <string>l'employe du mois</string>
+           <string>Employés par departement</string>
           </property>
          </widget>
          <widget class="QPushButton" name="pushButton_14">
           <property name="geometry">
            <rect>
-            <x>700</x>
-            <y>370</y>
+            <x>310</x>
+            <y>360</y>
             <width>131</width>
             <height>28</height>
            </rect>
@@ -3675,15 +3691,28 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
        </widget>
       </widget>
      </widget>
+     <widget class="QLabel" name="label_155">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>-10</y>
+        <width>721</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#f4a70d;&quot;&gt;MODULE EMPLOYES&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_10">
      <widget class="QTabWidget" name="tabWidget_7">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>0</y>
+        <x>10</x>
+        <y>40</y>
         <width>1171</width>
-        <height>701</height>
+        <height>691</height>
        </rect>
       </property>
       <property name="font">
@@ -3696,7 +3725,7 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
        </font>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>6</number>
       </property>
       <widget class="QWidget" name="tab_17">
        <attribute name="title">
@@ -5033,13 +5062,26 @@ p, li { white-space: pre-wrap; }
        </widget>
       </widget>
      </widget>
+     <widget class="QLabel" name="label_154">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>0</y>
+        <width>721</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#f4a70d;&quot;&gt;MODULE EVENEMENTS-PROMOTIONS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_7">
      <widget class="QToolBox" name="toolBox_2">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>0</y>
+        <x>10</x>
+        <y>40</y>
         <width>1356</width>
         <height>615</height>
        </rect>
@@ -5485,8 +5527,8 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>100</width>
-         <height>30</height>
+         <width>1356</width>
+         <height>534</height>
         </rect>
        </property>
        <attribute name="label">
@@ -6048,8 +6090,8 @@ p, li { white-space: pre-wrap; }
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>100</width>
-         <height>30</height>
+         <width>1356</width>
+         <height>534</height>
         </rect>
        </property>
        <attribute name="label">
@@ -6200,13 +6242,67 @@ p, li { white-space: pre-wrap; }
        </widget>
       </widget>
      </widget>
+     <widget class="QLabel" name="label_153">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>0</y>
+        <width>721</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; color:#f4a70d;&quot;&gt;MODULE RESERVATIONS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_11">
+     <widget class="QPushButton" name="offpb">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>200</y>
+        <width>201</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>OFF</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="onpb">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>30</y>
+        <width>201</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>ON</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="LCDshow">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>360</y>
+        <width>201</width>
+        <height>81</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Afficher Promo  LCD</string>
+      </property>
+     </widget>
     </widget>
    </widget>
    <widget class="QSplitter" name="splitter">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>50</y>
+      <x>10</x>
+      <y>110</y>
       <width>211</width>
       <height>431</height>
      </rect>
@@ -6239,24 +6335,57 @@ p, li { white-space: pre-wrap; }
       <string>Promotions - Evenements</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_6">
+    <widget class="QPushButton" name="intarduino">
      <property name="text">
-      <string>-MISSING LINK-</string>
+      <string>Gestion Arduino-Uno</string>
      </property>
     </widget>
    </widget>
    <widget class="Line" name="line">
     <property name="geometry">
      <rect>
-      <x>203</x>
-      <y>0</y>
-      <width>41</width>
+      <x>220</x>
+      <y>-10</y>
+      <width>21</width>
       <height>901</height>
      </rect>
     </property>
     <property name="orientation">
      <enum>Qt::Vertical</enum>
     </property>
+   </widget>
+   <widget class="QSplitter" name="splitter_2">
+    <property name="geometry">
+     <rect>
+      <x>960</x>
+      <y>0</y>
+      <width>178</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <widget class="QLabel" name="mydate">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; color:#f4a70d;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="myclock">
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; color:#f4a70d;&quot;&gt;TextLabel&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

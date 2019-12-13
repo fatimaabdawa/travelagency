@@ -30,29 +30,28 @@ int main(int argc, char *argv[])
     bool test=c.ouvrirConnexion();
      if(test)
     {
-         /*
-          * login l;
-         MainWindow w;
-         Clientform cf;
-         voyageform vf;
-         employeform ef;
-         marketingform mf;
+login l;
          QSplashScreen splash;
          splash.setPixmap(QPixmap(":/img/travel_background.jpg"));
          splash.show();
-         QTimer::singleShot(8000,&splash,&QSplashScreen::close);
-         QTimer::singleShot(5000,&l,&QSplashScreen::show);
+         QTimer::singleShot(4000,&splash,&QSplashScreen::close);
+         QTimer::singleShot(4000,&l,&QSplashScreen::show);
+
+          MainWindow w;
+          Clientform cf;
+          voyageform vf;
+          employeform ef;
+          marketingform mf;
+          integratedone d;
          l.show();
-         QObject::connect(&l,&login::adminSignal,&w,&MainWindow::show);
+         QObject::connect(&l,&login::habibSignal,&w,&MainWindow::show);
+         QObject::connect(&l,&login::adminSignal,&d,&integratedone::show);
          QObject::connect(&l,&login::MohamedSignal,&cf,&Clientform::show);
          QObject::connect(&l,&login::OussemaSignal,&vf,&voyageform::show);
          QObject::connect(&l,&login::salahSignal,&ef,&employeform::show);
          QObject::connect(&l,&login::fatimaSignal,&mf,&marketingform::show);
-         return a.exec();*/
-         integratedone d;
-         d.show();
-
          return a.exec();
+
     }
      return 0;
 

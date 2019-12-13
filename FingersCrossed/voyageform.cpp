@@ -29,6 +29,12 @@ voyageform::voyageform(QWidget *parent)
         player->play();
         connect(ui->sendBtn, SIGNAL(clicked()),this, SLOT(sendMail()));
         connect(ui->exitBtn, SIGNAL(clicked()),this, SLOT(close()));
+
+        m->setMedia(QUrl::fromLocalFile("C:/Users/Haboub/Documents/FingersCrossed/click.mp3"));
+
+
+
+
 }
 voyageform::~voyageform()
 {
@@ -56,6 +62,7 @@ void voyageform::mailSent(QString status)
 
 void voyageform::on_reservervoyage_ajout_clicked()
 {
+    m->play();
     QString mail;
     tmpreservoyage.set_codedestination(ui->codedestination_rv_ajout->currentText().toInt());
     tmpreservoyage.set_numeropasseport(ui->numeropasseport_rv_ajout->currentText().toInt());
@@ -126,6 +133,7 @@ void voyageform::on_datearrivee_rv_modif_userDateChanged(const QDate &date)
 
 void voyageform::on_rv_modifier_clicked()
 {
+    m->play();
     tmpmodifvoyage.set_classe(ui->classe_rv_modif->currentText());
     tmpmodifvoyage.set_datedeaprt(ui->datedepart_rv_ajout->text());
     tmpmodifvoyage.set_datearrivee(ui->datearrivee_rv_modif->text());
@@ -147,6 +155,7 @@ void voyageform::on_radioButton_2_clicked()
 }
 void voyageform::on_supprimer_rv_clicked()
 {
+    m->play();
     reservervoyage sup;
     bool test = sup.supprimer(ui->reference_voyage_combo->currentText().toInt());
     if(test)
@@ -160,7 +169,7 @@ void voyageform::on_supprimer_rv_clicked()
 
 void voyageform::on_Ajout_rhotel_clicked()
 {
-
+m->play();
     tmpajouth.set_duree(ui->duree_ajout->text().toInt());
     tmpajouth.set_idhotel(ui->idhotel_combobox->currentText().toInt());
     tmpajouth.set_numeropasseport(ui->numeropasseport_combobox->currentText().toInt());
@@ -226,6 +235,7 @@ void voyageform::on_chercher_trier_rv_textChanged(const QString &arg1)
 
 void voyageform::on_supprimer_rhotel_clicked()
 {
+    m->play();
     tmpreshotel.set_numeropasseport(ui->idhotel_supprimer->currentText().toInt());
     bool test=tmpreshotel.supprimer();
     if(test) {ui->tabreshotel->setModel(tmpreshotel.afficher());
@@ -234,7 +244,7 @@ void voyageform::on_supprimer_rhotel_clicked()
     }
 }
 void voyageform::on_modifier_rhotel_clicked()
-{
+{m->play();
     tmpreshotel.set_numeropasseport(ui->idhotel_supprimer->currentText().toInt());
     tmpreshotel.set_duree(ui->rh_duree_modif->text().toInt());
     bool test=tmpreshotel.modifier();
@@ -297,11 +307,13 @@ void voyageform::on_codedestination_rv_ajout_currentIndexChanged(const QString &
 
 void voyageform::on_radioButton_3_clicked()
 {
+    m->play();
       ui->tabreshotel->setModel(tmpreshotel.trie_idhotel());
 }
 
 void voyageform::on_radioButton_4_clicked()
 {
+    m->play();
      ui->tabreshotel->setModel(tmpreshotel.trie_nomH());
 }
 

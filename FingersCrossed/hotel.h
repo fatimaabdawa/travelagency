@@ -37,6 +37,7 @@ class hotel
    //SEARCH AND DESTROY
    QSqlQueryModel * recherche(QString valeur,int etat);
    void chercher();
+   void pkeor(QString q, int iq);
 private :
     QString nom,adresse;
     int etoiles,idhotel;

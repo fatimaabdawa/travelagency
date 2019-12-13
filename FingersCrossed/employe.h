@@ -24,6 +24,7 @@ bool update(QString,QString,QString,int,int);
 //metier
 QSqlQueryModel *trieasc(QString,int);
 QSqlQueryModel *empmois();
+QSqlQueryModel *salaireavg();
 bool redsalair(int,int);
  private:
 QString nom,prenom,departement;

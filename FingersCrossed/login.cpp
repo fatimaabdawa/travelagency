@@ -14,6 +14,10 @@
 #include <QTimer>
 #include <QMediaPlayer>
 #include "arduino.h"
+
+#include "destination.h"
+
+
 login::login(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::login)
@@ -46,25 +50,27 @@ login::login(QWidget *parent)
     case(0):qDebug()<< "arduino is available and connected to : "<< A.getarduino_port_name();
         break;
     case(1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
-       break;
+        break;
     case(-1):qDebug() << "arduino is not available";
     }
 
-     QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label()));
+    //QObject::connect(A.getserial(),SIGNAL(readyRead()),this,SLOT(update_label()));
 
     ui->Wrongpassword->hide();
+
 }
+/*
 void login::update_label()
 {
+    if(A.getserial()->waitForReadyRead(10))
     data=A.read_from_arduino();
 if(data == "1")
     qDebug() << "ventilator is  ON";
-
     else if(data== "0" )
         qDebug() << "ventilator is  OFF";
 
 }
-
+*/
 
 login::~login()
 {
@@ -78,42 +84,60 @@ void login::on_connecter_clicked()
     QString pw = ui->password->text();
 
     int logging = Authentification(id,pw);
-
-  if(logging==1)
+    if(logging >= 1 && logging <= 6)
     {
-      emit adminSignal();
-    }else if (logging == 3 )
-  {
-      emit MohamedSignal();
-      QMediaPlayer *m= new QMediaPlayer();
-      m->setMedia(QUrl::fromLocalFile("/Users/Haboub/Documents/FingersCrossed/acceuil.mp3"));
-      m->play();
-  }else if (logging == 2 )
-{
-    emit OussemaSignal();
-}else if (logging == 4)
-  {
-      emit salahSignal();
-  }
-  else if(logging == 5)
-  {
-      emit fatimaSignal();
-  }
-  else
-      {
-      ui->Wrongpassword->show();
-      }
+        A.close_arduino();
+    }
+    switch(logging){
+    case 1 :
+    {
+        emit habibSignal();
+    }
+    break;
+    case 3 :
+    {
+        emit MohamedSignal();
+        QMediaPlayer *m= new QMediaPlayer();
+        m->setMedia(QUrl::fromLocalFile("/Users/Haboub/Documents/FingersCrossed/acceuil.mp3"));
+        m->play();
+    }
+        break;
+    case 2:
+    {
+        emit OussemaSignal();
+    }
+        break;
+    case 4:
+    {
+        emit salahSignal();
+    }
+        break;
+    case 5:
+    {
+        emit fatimaSignal();
+    }
+        break;
+    case 6 :
+    {
+        emit adminSignal();
+    }break;
+     case 0 :
+    {
+        ui->Wrongpassword->show();
+    }
+       break;
+    }
 }
 
 void login::on_showpassword_clicked(bool checked)
 {
     if(checked)
     {
-    ui->password->setEchoMode(QLineEdit::EchoMode(0));
+        ui->password->setEchoMode(QLineEdit::EchoMode(0));
     }
     else
     {
-    ui->password->setEchoMode(QLineEdit::EchoMode(2));
+        ui->password->setEchoMode(QLineEdit::EchoMode(2));
     }
 }
 
@@ -126,7 +150,7 @@ int login::Authentification(QString log,QString pw)
     QString cl = "Clients";
     QString emp = "Employes";
     QString prom = "Marketing";
-    QString yep = "nope";
+    QString yep = "Administrator";
     QSqlQuery *query = new QSqlQuery;
     query->prepare("select * from employe");
     query->exec();
@@ -144,6 +168,8 @@ int login::Authentification(QString log,QString pw)
                 return 4;
             else if(query->value(3).toString()== prom)
                 return 5;
+            else if(query->value(3).toString() == yep)
+                return 6;
             else return 0;
         }
     }
@@ -152,18 +178,23 @@ int login::Authentification(QString log,QString pw)
 
 void login::on_pushButton_clicked()
 {
+    QByteArray byte = "1";
 
-    A.write_to_arduino("1");
+    A.write_to_arduino(byte);
     if(A.getserial()->waitForReadyRead(10))
-data=A.read_from_arduino();
-qDebug() << "data : " << data;
+        data=A.read_from_arduino();
+    qDebug() << "data : " << data;
 }
 
 void login::on_pushButton_2_clicked()
 {
-
+    // QByteArray byte = "00";
+    QByteArray byte = "0";
     A.write_to_arduino("0");
+    A.write_to_arduino(byte);
     if(A.getserial()->waitForReadyRead(10))
-data=A.read_from_arduino();
-qDebug() << "data : " << data;
+        data=A.read_from_arduino();
+    qDebug() << "data : " << data;
 }
+
+

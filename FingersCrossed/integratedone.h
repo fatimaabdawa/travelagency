@@ -17,6 +17,8 @@
 #include "statclient.h"
 #include "client.h"
 #include "clientvip.h"
+#include "Arduino.h"
+
 namespace Ui {
 class integratedone;
 }
@@ -48,6 +50,8 @@ private slots:
     void on_intclients_clicked();
 
     void on_intevents_clicked();
+
+    void showTime();
 
     //MOHAMED
 
@@ -240,9 +244,29 @@ private slots:
 
 
 
+    void on_intarduino_clicked();
+
+    //void on_rechercheclientvip_currentChanged(int index);
+
+    //void on_toolBox_currentChanged(int index);
+
+    //void on_tabWidget_5_currentChanged(int index);
+
+    //void on_tabWidget_7_currentChanged(int index);
+
+    //void on_toolBox_2_currentChanged(int index);
+
+    void on_whole_in_one_currentChanged(int arg1);
+
+    void on_onpb_clicked();
+
+    void on_offpb_clicked();
+
+    void on_LCDshow_clicked();
+
 private:
     Ui::integratedone *ui;
-
+QMediaPlayer *m= new QMediaPlayer();
     //MOHAMED
 
     client tmpclient;
@@ -268,6 +292,11 @@ private:
 
     prromtion tmpprromotion;
     evenemant tmpevenemant;
+
+    //
+
+    Arduino A;
+    QByteArray data;
 };
 
 #endif // INTEGRATEDONE_H

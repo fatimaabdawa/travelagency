@@ -1344,19 +1344,6 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
          </item>
         </layout>
        </widget>
-       <widget class="QPushButton" name="pushButton_5">
-        <property name="geometry">
-         <rect>
-          <x>880</x>
-          <y>370</y>
-          <width>201</width>
-          <height>28</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>afficher les moins abscenets</string>
-        </property>
-       </widget>
        <widget class="QLineEdit" name="lineEdit_6">
         <property name="geometry">
          <rect>
@@ -1403,23 +1390,23 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
          </rect>
         </property>
        </widget>
-       <widget class="QTableView" name="em_tri">
+       <widget class="QTableView" name="tabsalaire">
         <property name="geometry">
          <rect>
           <x>1090</x>
-          <y>360</y>
+          <y>451</y>
           <width>191</width>
-          <height>192</height>
+          <height>101</height>
          </rect>
         </property>
        </widget>
-       <widget class="QTableView" name="tableView">
+       <widget class="QTableView" name="tabdepartment">
         <property name="geometry">
          <rect>
-          <x>330</x>
+          <x>390</x>
           <y>410</y>
-          <width>256</width>
-          <height>61</height>
+          <width>521</width>
+          <height>141</height>
          </rect>
         </property>
        </widget>
@@ -1427,20 +1414,20 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
         <property name="geometry">
          <rect>
           <x>410</x>
-          <y>390</y>
-          <width>111</width>
-          <height>16</height>
+          <y>370</y>
+          <width>261</width>
+          <height>31</height>
          </rect>
         </property>
         <property name="text">
-         <string>l'employe du mois</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Nombre d'employés par departement&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pushButton_4">
         <property name="geometry">
          <rect>
-          <x>700</x>
-          <y>370</y>
+          <x>100</x>
+          <y>490</y>
           <width>131</width>
           <height>28</height>
          </rect>
@@ -1496,6 +1483,19 @@ QCheckBox::indicator:disabled, QRadioButton::indicator:disabled
         </property>
         <property name="text">
          <string>Recherche</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_18">
+        <property name="geometry">
+         <rect>
+          <x>980</x>
+          <y>480</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Salaire moyen :&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
       </widget>

@@ -17,6 +17,8 @@ employeform::employeform(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->tabemploye->setModel(tmpemploye.afficher());
+    ui->tabdepartment->setModel(tmpemploye.empmois());
+    ui->tabsalaire->setModel(tmpemploye.salaireavg());
 }
 
 employeform::~employeform()
@@ -40,9 +42,9 @@ void employeform::on_pushButton_clicked()
     if((e.ajouter())&&(c.ajouter()))
     {
 
-
+ ui->tabdepartment->setModel(tmpemploye.empmois());
         ui->tabemploye->setModel(tmpemploye.afficher());
-
+ui->tabsalaire->setModel(tmpemploye.salaireavg());
 
         QMessageBox::information(nullptr,QObject::tr("Ajout"),"Ajout effectué");
 
@@ -57,7 +59,8 @@ void employeform::on_pushButton_2_clicked()
     bool test=tmpemploye.supprimer(idemp);
     if(test)
     {ui->tabemploye->setModel(tmpemploye.afficher());
-
+ui->tabsalaire->setModel(tmpemploye.salaireavg());
+  ui->tabdepartment->setModel(tmpemploye.empmois());
         QMessageBox::information(nullptr,QObject::tr("suppression"),"employé supprimé");
     }
 
@@ -80,7 +83,8 @@ void employeform::on_pushButton_3_clicked()
     if(y)
 
     {ui->tabemploye->setModel(tmpemploye.afficher());
-
+     ui->tabdepartment->setModel(tmpemploye.empmois());
+     ui->tabsalaire->setModel(tmpemploye.salaireavg());
         QMessageBox::information(nullptr,QObject::tr("modification employe"),"modification fait");
     }
     else{
@@ -140,12 +144,6 @@ void employeform::on_pushButton_4_clicked()
 
 }
 
-
-void employeform::on_pushButton_5_clicked()
-{
-
-    ui->tableView->setModel(tmpemploye.empmois());
-}
 
 void employeform::on_seeker_line_textChanged(const QString &arg1)
 {

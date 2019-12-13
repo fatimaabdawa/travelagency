@@ -34,10 +34,10 @@ QSqlQueryModel *destination::afficher()
 {
     QSqlQueryModel * model = new QSqlQueryModel();
     model->setQuery("select * from destination");
-    model->setHeaderData(0, Qt::Horizontal,QObject::tr("nom"));
-    model->setHeaderData(2, Qt::Horizontal,QObject::tr("code"));
-    model->setHeaderData(1, Qt::Horizontal,QObject::tr("description"));
-    model->setHeaderData(3, Qt::Horizontal,QObject::tr("promo"));
+    model->setHeaderData(0, Qt::Horizontal,QObject::tr("Nom"));
+    model->setHeaderData(2, Qt::Horizontal,QObject::tr("Description"));
+    model->setHeaderData(1, Qt::Horizontal,QObject::tr("Code"));
+    model->setHeaderData(3, Qt::Horizontal,QObject::tr("Promo"));
     return model ;
 }
 
@@ -106,3 +106,36 @@ void destination:: chercher(int rd)
 }
 
 
+void destination::pkeor(QString q, int iq)
+{
+    //or description =:q or code = :q or promo = :q
+    QSqlQuery query;
+    QString iqq = QString::number(iq);
+    query.prepare("select * from destination where nom = '"+q+"' or description = '"+q+"' or promo = '"+iqq+"' or code = '"+iqq+"' ");
+    query.bindValue(":iqq",iq);
+    query.bindValue(":q",q);
+    query.exec();
+        while(query.next())
+    {
+            nom = query.value(0).toString();
+            description = query.value(1).toString();
+            code = query.value(2).toInt();
+            promo = query.value(3).toString().toInt();
+    }
+
+}
+
+QString destination::retourneFirstPromoDestination()
+{
+    QString namem;
+    QSqlQuery query;
+    query.prepare("select nom from destination where promo = '1' ");
+    query.exec();
+    while(query.next())
+    {
+        namem = query.value(0).toString();
+    }
+       //std::string plo = namem.toStdString();
+
+    return namem;
+}

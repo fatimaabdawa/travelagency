@@ -18,7 +18,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-
+    void NewAddedMail(QString name, QString receiver);
 private slots:
 
 
@@ -58,6 +58,22 @@ private slots:
 
     void on_mute_button_clicked();
 
+    void on_ascendingtr_clicked();
+
+    void on_descendingtr_clicked();
+
+    void on_ascend_clicked();
+
+    void on_descend_clicked();
+
+    void on_tableView_activated(const QModelIndex &index);
+
+    void on_tableView2_activated(const QModelIndex &index);
+
+    void on_historique_clicked();
+
+    void on_historique_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     destination tmpdestination;
@@ -66,5 +82,6 @@ private:
     int etat=0;
     notification ok;
     QMediaPlayer *player = new QMediaPlayer();
+    QMediaPlayer *m = new QMediaPlayer();
 };
 #endif // MAINWINDOW_H

@@ -16,7 +16,6 @@ Clientform::Clientform(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Clientform)
 {
-
     ui->setupUi(this);
     QTimer *timer=new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(showTime()));
@@ -36,6 +35,7 @@ void Clientform::showTime()
     QTime time=QTime::currentTime();
     QString time_t=time.toString("hh : mm : ss");
     ui->myclock->setText(time_t);
+
 }
 
 void Clientform::on_pushButton_ajouterclient_clicked()
@@ -64,6 +64,13 @@ void Clientform::on_pushButton_ajouterclient_clicked()
            QMediaPlayer *m= new QMediaPlayer();
            m->setMedia(QUrl::fromLocalFile("/Users/Haboub/Documents/FingersCrossed/ajoutclient.mp3"));
            m->play();
+
+           QString receiver = ui->ajoutmailclient->text();
+
+
+           Smtp* smtp = new Smtp("nooblolsaibot1@gmail.com", "haboubax", "smtp.gmail.com", 465);
+           smtp->sendMail("nooblolsaibot1@gmail.com",receiver,"Welcome","Welcome");
+
         }
         else
         {
@@ -90,9 +97,6 @@ void Clientform::on_tabWidget_currentChanged(int index)
     ui->comboBoxsuppclient->setModel(tmpclient.GetNumpassModel());
     connect(ui->sendBtn, SIGNAL(clicked()),this, SLOT(sendMail()));
     connect(ui->exitBtn, SIGNAL(clicked()),this, SLOT(close()));
-
-
-
 }
 
 void Clientform::on_comboBoxmodifclient_activated(const QString &arg1)
@@ -154,7 +158,6 @@ void Clientform::on_pushButton_suppclient_clicked()
        ui->tableclient->setModel(tmpclient.afficher());
        ui->comboBoxsuppclient->setModel(tmpclient.GetNumpassModel());
        ui->comboBoxmodifclient->setModel(tmpclient.GetNumpassModel());
-
     }
 }
 
@@ -191,6 +194,11 @@ void Clientform::on_pushButton_ajouterclientvip_clicked()
            QMediaPlayer *m= new QMediaPlayer();
            m->setMedia(QUrl::fromLocalFile("/Users/Haboub/Documents/FingersCrossed/ajoutclient.mp3"));
            m->play();
+           QString receiver = ui->ajoutmailclientvip->text();
+
+
+           Smtp* smtp = new Smtp("nooblolsaibot1@gmail.com", "haboubax", "smtp.gmail.com", 465);
+           smtp->sendMail("nooblolsaibot1@gmail.com",receiver,"ajout","contenu");
         }
         else
         {
@@ -291,14 +299,14 @@ void Clientform::on_rechercheclientvip_2_textChanged(const QString &arg1)
 
 
 
-void Clientform::sendMail()
+/*void Clientform::sendMail()
 {
     Smtp* smtp = new Smtp(ui->uname->text(), ui->paswd->text(), ui->server->text(), ui->port->text().toUShort());
     connect(smtp, SIGNAL(status(QString)), this, SLOT(mailSent(QString)));
 
 
     smtp->sendMail(ui->uname->text(), ui->rcpt->text() , ui->subject->text(),ui->msg->toPlainText());
-}
+}*/
 
 void Clientform::mailSent(QString status)
 {
@@ -309,7 +317,15 @@ void Clientform::mailSent(QString status)
 
 void Clientform::on_sendBtn_clicked()
 {
-   sendMail();
+    QString receiver;
+    QString objet;
+    QString contenu;
+    receiver = ui->receiver_line->text();
+    objet = ui->about_line->text();
+    contenu = ui->text_line->text();
+    Smtp* smtp = new Smtp("nooblolsaibot1@gmail.com", "haboubax", "smtp.gmail.com", 465);
+    if(smtp->sendMail("nooblolsaibot1@gmail.com",receiver,objet,contenu))
+        QMessageBox::information(nullptr,QObject::tr("mail"),"Votre mail a été envoyé.");
 }
 
 void Clientform::on_exitBtn_clicked()

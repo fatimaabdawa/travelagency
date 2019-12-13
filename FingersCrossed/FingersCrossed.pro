@@ -25,6 +25,7 @@ SOURCES += \
     employe.cpp \
     employeform.cpp \
     evenemant.cpp \
+    historique.cpp \
     hotel.cpp \
     integratedone.cpp \
     login.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     employe.h \
     employeform.h \
     evenemant.h \
+    historique.h \
     hotel.h \
     integratedone.h \
     login.h \

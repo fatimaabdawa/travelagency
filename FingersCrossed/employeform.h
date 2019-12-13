@@ -26,9 +26,6 @@ private slots:
 
     void on_pushButton_4_clicked();
 
-    void on_pushButton_5_clicked();
-
-
     void on_seeker_line_textChanged(const QString &arg1);
 
     void on_ascendingsearch_clicked();

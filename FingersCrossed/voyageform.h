@@ -104,6 +104,7 @@ private:
     reservervoyage tmpmodifvoyage;
     QMediaPlayer *player = new QMediaPlayer();
     notification ok;
+    QMediaPlayer *m= new QMediaPlayer();
 };
 
 #endif // VOYAGEFORM_H

@@ -32,7 +32,9 @@ public:
    QSqlQueryModel * ModelCodeDestinations();
   //SEARCH AND DESTROY
    QSqlQueryModel * recherche(QString,int);
+   void pkeor(QString,int);
    void chercher(int);
+   QString retourneFirstPromoDestination();
 private :
     QString nom,description;
     int code,promo;
